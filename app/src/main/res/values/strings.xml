@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">RecAD</string>
+    <string name="todo">TODO</string>
+    <string name="account_creation">Account creation</string>
+    <string name="log_in">Log in</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot password?</string>
+</resources>

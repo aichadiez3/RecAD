@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "50901516911",
+    "project_id": "recad-aichadiezdb",
+    "storage_bucket": "recad-aichadiezdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50901516911:android:a40adb46a1e93e2338839a",
+        "android_client_info": {
+          "package_name": "com.example.recad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50901516911-a0hei447tbaaqj6t7j2t5pug1a8udste.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9gWDDqmsTBfin_8AW5wRNIOHOR_Qk2YU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50901516911-a0hei447tbaaqj6t7j2t5pug1a8udste.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

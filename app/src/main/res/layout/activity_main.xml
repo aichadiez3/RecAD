@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/container">
 
     <ImageView
         android:id="@+id/backimage"
@@ -40,7 +41,6 @@
         android:layout_marginBottom="68dp"
         android:background="@color/pink_dark"
         android:fontFamily="sans-serif"
-        android:onClick="logInClick"
         android:text="@string/log_in"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"

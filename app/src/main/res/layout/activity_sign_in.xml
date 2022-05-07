@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/container">
+
 
     <ImageView
         android:id="@+id/backimage4"
@@ -21,12 +23,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:contentDescription="TODO"
         app:layout_constraintEnd_toEndOf="@+id/backimage4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/backimage4"
         app:layout_constraintTop_toBottomOf="@+id/imageView14"
-        app:srcCompat="@drawable/bigrectangle"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/bigrectangle" />
 
     <ImageView
         android:id="@+id/rectangle2"
@@ -216,6 +218,19 @@
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+
+    <ImageView
+        android:id="@+id/warning"
+        android:layout_width="193dp"
+        android:layout_height="165dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/rectangle1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.813"
+        app:srcCompat="@drawable/noun_error" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

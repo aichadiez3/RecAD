@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import kotlin.math.log
 
 class LogInFragment : Fragment() {
 
@@ -18,20 +20,27 @@ class LogInFragment : Fragment() {
     private lateinit var loginButton: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         var view = inflater.inflate(R.layout.activity_main, container, true)
 
         username = view.findViewById(R.id.usernameField)
         password = view.findViewById(R.id.passwordField)
-        loginButton = view.findViewById(R.id.loginButton)
+        loginButton = view.findViewById(R.id.loginButton) as Button
+
+        markButtonDisable(loginButton)
+        markButtonEnable(loginButton)
 
         view.findViewById<Button>(R.id.loginButton).setOnClickListener {
-
             validateForm()
+        }
 
+        view.findViewById<ImageView>(R.id.createAccount).setOnClickListener {
+            var navRegister = activity as FragmentNavigation
+            navRegister.navigateFrag(RegistrationFragment(), false)
 
         }
 
-        return view
+    return inflater.inflate(R.layout.activity_main, container, false)
     }
 
     private fun validateForm(){
@@ -63,6 +72,7 @@ class LogInFragment : Fragment() {
         }
 
     }
+
 
 
     fun markButtonDisable(button: Button){

@@ -82,8 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameField"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameField" />
 
     <EditText
         android:id="@+id/usernameField"
@@ -102,8 +101,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/backimage"
-        app:layout_constraintVertical_bias="0.474"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintVertical_bias="0.474"/>
 
     <ImageView
         android:id="@+id/iconImage"

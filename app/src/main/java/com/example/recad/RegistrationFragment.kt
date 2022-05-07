@@ -22,8 +22,6 @@ class RegistrationFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-
-
         var view = inflater.inflate(R.layout.activity_sign_in, container, true)
         username = view.findViewById(R.id.usernameField2)
         password = view.findViewById(R.id.passwordField2)
@@ -40,19 +38,26 @@ class RegistrationFragment : Fragment() {
         fAuth = Firebase.auth
 
         //   ----------> This is how we change between fragments
-        view.findViewById<Button>(R.id.backButton).setOnClickListener {
+        view.findViewById<ImageView>(R.id.backButton).setOnClickListener {
             var navRegister = activity as FragmentNavigation
             navRegister.navigateFrag(LogInFragment(), false)
         }
 
         // This is to validate the parameters entered by the user
         view.findViewById<Button>(R.id.registrationButton).setOnClickListener {
-            validateEmptyForm()
+            //validateEmptyForm()
         }
 
-        //return inflater.inflate(R.layout.activity_sign_in,container,false)
-        return view
+        view.findViewById<ImageView>(R.id.calendarImage).setOnClickListener {
+            val cal = view.findViewById<CalendarView>(R.id.calendarView)
+            cal.visibility = CalendarView.VISIBLE
+            
+        }
+
+
+        return inflater.inflate(R.layout.activity_sign_in,container,false)
     }
+    /*
 
     private fun firebaseSignUp(){
         fAuth.createUserWithEmailAndPassword(username.text.toString(), password.text.toString()).addOnCompleteListener{
@@ -67,7 +72,9 @@ class RegistrationFragment : Fragment() {
         }
     }
 
+     */
 
+/*
     private fun validateEmptyForm(){
         val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.noun_error)
 
@@ -102,6 +109,8 @@ class RegistrationFragment : Fragment() {
 
     }
 
+ */
+
 
     fun markButtonDisable(button: Button){
         button?.isEnabled = false
@@ -112,6 +121,7 @@ class RegistrationFragment : Fragment() {
         button?.isEnabled = true
         button?.setBackgroundColor(ContextCompat.getColor(button.context, R.color.pink_dark))
     }
+
 
 
 }

@@ -11,6 +11,6 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.about_1, container, true)
 
-        return view
+        return inflater.inflate(R.layout.about_1, container, false)
     }
 }

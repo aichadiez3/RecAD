@@ -14,4 +14,5 @@
     <string name="patient_information">Patient Information</string>
     <string name="select_birthdate">Select birthdate</string>
     <string name="gender">gender</string>
+    <string name="save_date">Save date</string>
 </resources>

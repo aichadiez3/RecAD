@@ -49,9 +49,8 @@ class RegistrationFragment : Fragment() {
         }
 
         view.findViewById<ImageView>(R.id.calendarImage).setOnClickListener {
-            val cal = view.findViewById<CalendarView>(R.id.calendarView)
-            cal.visibility = CalendarView.VISIBLE
-            
+            var navRegister = activity as FragmentNavigation
+            navRegister.navigateFrag(CalendarFragment(), false)
         }
 
 

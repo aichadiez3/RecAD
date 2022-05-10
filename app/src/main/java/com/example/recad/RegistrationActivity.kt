@@ -21,7 +21,7 @@ class RegistrationActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
-        signInButton = findViewById(R.id.createAccount)
+        signInButton = findViewById(R.id.registrationButton)
         signInButton.setOnClickListener {
             startActivity(Intent(this, HomeActivity::class.java))
         }

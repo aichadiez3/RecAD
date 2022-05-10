@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         registerAccount = findViewById(R.id.createAccount)
 
         registerAccount.setOnClickListener{
-
             startActivity(Intent(this, RegistrationActivity::class.java))
         }
 
@@ -75,8 +74,6 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         }
 
     }
-
-
 
     inner class DiaryGestureListener : GestureDetector.SimpleOnGestureListener() {
 
@@ -141,6 +138,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     private fun onSwipeRight() {
         Toast.makeText(this, "Right swipe", Toast.LENGTH_LONG).show()
+        startActivity(Intent(this, RegistrationActivity::class.java))
     }
 
     private fun onSwipeLeft() {

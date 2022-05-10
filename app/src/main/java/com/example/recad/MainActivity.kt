@@ -6,8 +6,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.fragment.app.Fragment
@@ -15,6 +14,11 @@ import androidx.fragment.app.Fragment
 class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     private lateinit var detector: GestureDetectorCompat
+    private lateinit var username: EditText
+    private lateinit var password: EditText
+    private lateinit var loginButton: Button
+    private lateinit var registerAccount: ImageView
+    private lateinit var changePass: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +42,20 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
         detector = GestureDetectorCompat(this, DiaryGestureListener())
 
-        startActivity(Intent(this, LogInActivity::class.java))
+    // Open a new activity for registration
+
+        registerAccount = findViewById(R.id.createAccount)
+
+        registerAccount.setOnClickListener{
+
+            startActivity(Intent(this, RegistrationActivity::class.java))
+        }
+
+        changePass = findViewById(R.id.resetPasswordButton)
+        changePass.setOnClickListener{
+            Toast.makeText(this@MainActivity, "Change password unavailable", Toast.LENGTH_LONG).show()
+
+        }
 
 /*
         startActivity(Intent(this, LogInActivity::class.java).apply {

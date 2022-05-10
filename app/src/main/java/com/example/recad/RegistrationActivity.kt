@@ -20,6 +20,16 @@ class RegistrationActivity : AppCompatActivity() {
             putExtra("extra_2", value2)
             putExtra("extra_3", value3)
         })
+
+        button.setOnClickListener {
+            val intent = Intent(this@MainActivity,SecondActivity::class.java);
+            var userName = username.text.toString()
+            var password = password_field.text.toString()
+            intent.putExtra("Username", userName)
+            intent.putExtra("Password", password)
+            startActivity(intent);
+        }
+ }
 */
     }
 

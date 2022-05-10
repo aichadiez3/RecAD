@@ -27,13 +27,26 @@
         <activity
             android:name=".RegistrationActivity"
             android:label="Registration"
-            tools:ignore="WrongManifestParent"
+            android:parentActivityName=".MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="com.example.recad.RegistrationActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".HomeActivity"
+            android:label="Home"
+            android:parentActivityName=".MainActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.example.recad.HomeActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
 
     </application>
 

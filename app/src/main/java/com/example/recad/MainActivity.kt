@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     private fun onSwipeBottom() {
         Toast.makeText(this, "Bottom swipe", Toast.LENGTH_LONG).show()
-        
+
     }
 
     private fun onSwipeTop() {

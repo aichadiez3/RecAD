@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
     private lateinit var registerAccount: ImageView
     private lateinit var changePass: TextView
 
+    private lateinit var frag: Fragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -137,24 +139,45 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
     }
 
     private fun onSwipeRight() {
-        Toast.makeText(this, "Right swipe", Toast.LENGTH_LONG).show()
-
-    }
-
-    private fun onSwipeLeft() {
-        Toast.makeText(this, "Left swipe", Toast.LENGTH_LONG).show()
         var frag = supportFragmentManager
             .findFragmentById(R.id.container)
 
-        // Check the fragment has not already been initialized
-        if (frag == null) {
-            // Initialize the fragment based on our SimpleFragment
-            frag = AboutUsFragment()
+        if (frag == AboutUsFragment()) {
+            frag = InfoFragment()
             supportFragmentManager.beginTransaction()
                 .add(R.id.container, frag)
                 //.add(R.id.container, LogInFragment())   --> Also valid if we remove the variable frag declaration
                 .commit()
+        } else {
+            startActivity(Intent(this, MainActivity::class.java))
         }
+    }
+
+    private fun onSwipeLeft() {
+
+        var frag_in = supportFragmentManager.findFragmentById(R.id.container)
+
+        if (frag_in != null) {
+            frag = frag_in
+
+            if (frag == AboutUsFragment()){
+                frag = InfoFragment()
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.container, frag as InfoFragment)
+                    //.add(R.id.container, LogInFragment())   --> Also valid if we remove the variable frag declaration
+                    .commit()
+            } else {
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+        } else {
+            frag = AboutUsFragment()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.container, frag as AboutUsFragment)
+                //.add(R.id.container, LogInFragment())   --> Also valid if we remove the variable frag declaration
+                .commit()
+        }
+
+
     }
 
     override fun navigateFrag(fragment: Fragment, addToStack: Boolean){

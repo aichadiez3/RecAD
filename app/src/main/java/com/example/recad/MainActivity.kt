@@ -138,11 +138,23 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     private fun onSwipeRight() {
         Toast.makeText(this, "Right swipe", Toast.LENGTH_LONG).show()
-        startActivity(Intent(this, RegistrationActivity::class.java))
+
     }
 
     private fun onSwipeLeft() {
         Toast.makeText(this, "Left swipe", Toast.LENGTH_LONG).show()
+        var frag = supportFragmentManager
+            .findFragmentById(R.id.container)
+
+        // Check the fragment has not already been initialized
+        if (frag == null) {
+            // Initialize the fragment based on our SimpleFragment
+            frag = AboutUsFragment()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.container, frag)
+                //.add(R.id.container, LogInFragment())   --> Also valid if we remove the variable frag declaration
+                .commit()
+        }
     }
 
     override fun navigateFrag(fragment: Fragment, addToStack: Boolean){

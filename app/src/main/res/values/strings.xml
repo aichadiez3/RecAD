@@ -15,4 +15,5 @@
     <string name="select_birthdate">Select birthdate</string>
     <string name="gender">gender</string>
     <string name="save_date">Save date</string>
+    <string name="select_your_birthdate">Select your birthdate</string>
 </resources>

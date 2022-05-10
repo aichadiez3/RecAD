@@ -4,39 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pink_dark">
+    android:background="#B5FFFFFF"
+    tools:ignore="ExtraText">
 
     <Button
         android:id="@+id/saveDate"
-        android:layout_width="117dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="156dp"
+        android:layout_width="129dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="96dp"
         android:background="@color/pink_dark"
         android:fontFamily="sans-serif"
         android:text="@string/save_date"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="18sp"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        app:layout_constraintVertical_bias="0.998"
         tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:layout_weight="1"
+        android:text="@string/select_your_birthdate"
+        android:textColor="#575757"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/calendarView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="52dp"
-        android:background="@color/pink_light"
-        android:calendarViewShown="false"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/round_pink_rectangle"
         android:clickable="true"
-        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.225"
-        tools:ignore="DuplicateClickableBoundsCheck" />
+        app:layout_constraintVertical_bias="0.348"
+        tools:ignore="DuplicateClickableBoundsCheck"
+        android:focusable="true" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

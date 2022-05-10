@@ -2,15 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:id="@+id/container">
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/backimage"
         android:layout_width="429dp"
         android:layout_height="838dp"
+        android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.777"
@@ -18,38 +19,35 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.981"
         app:srcCompat="@drawable/backimage"
-        tools:ignore="ImageContrastCheck"
-        android:contentDescription="@string/todo" />
+        tools:ignore="ImageContrastCheck" />
 
     <ImageView
         android:id="@+id/extendPoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
+        android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/extend_points"
-        tools:ignore="ImageContrastCheck"
-        android:contentDescription="@string/todo" />
+        tools:ignore="ImageContrastCheck" />
 
     <Button
         android:id="@+id/loginButton"
-        android:layout_width="117dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="68dp"
+        android:layout_width="130dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="140dp"
         android:background="@color/pink_dark"
         android:fontFamily="sans-serif"
         android:text="@string/log_in"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.123"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/backimage"
-        app:layout_constraintVertical_bias="0.998"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toTopOf="@+id/extendPoints"
+        app:layout_constraintTop_toBottomOf="@+id/resetPasswordButton"
+        app:layout_constraintVertical_bias="0.142"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="28dp" />
 
     <TextView
         android:id="@+id/resetPasswordButton"
@@ -101,7 +99,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/backimage"
-        app:layout_constraintVertical_bias="0.474"/>
+        app:layout_constraintVertical_bias="0.474" />
 
     <ImageView
         android:id="@+id/iconImage"
@@ -121,11 +119,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
+        android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/loginButton"
         app:srcCompat="@drawable/createaccount"
-        tools:ignore="ImageContrastCheck"
-        android:contentDescription="@string/todo" />
+        tools:ignore="ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

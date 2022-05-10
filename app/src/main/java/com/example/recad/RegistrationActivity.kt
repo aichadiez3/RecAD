@@ -13,10 +13,14 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     fun changeActivity(view: View){
-        val intent = Intent(this, RegistrationActivity::class.java)
-        // To pass any data to next activity
-        //intent.putExtra("keyIdentifier", value)
-        startActivity(intent)
+        /*
+        startActivity(Intent(this, LogInActivity::class.java).apply {
+            // To pass any data to next activity
+            putExtra("extra_1", value1)
+            putExtra("extra_2", value2)
+            putExtra("extra_3", value3)
+        })
+*/
     }
 
 }

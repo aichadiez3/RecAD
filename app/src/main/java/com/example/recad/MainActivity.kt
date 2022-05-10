@@ -38,15 +38,16 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
         detector = GestureDetectorCompat(this, DiaryGestureListener())
 
+        startActivity(Intent(this, LogInActivity::class.java))
+
+/*
         startActivity(Intent(this, LogInActivity::class.java).apply {
-            /*// To pass any data to next activity
+            // To pass any data to next activity
             putExtra("extra_1", value1)
             putExtra("extra_2", value2)
             putExtra("extra_3", value3)
-            */
-
         })
-
+*/
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {

@@ -147,8 +147,8 @@
 
     <EditText
         android:id="@+id/usernameField2"
-        android:layout_width="211dp"
-        android:layout_height="48dp"
+        android:layout_width="215dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="96dp"
         android:ems="10"
         android:hint="@string/enter_a_username"

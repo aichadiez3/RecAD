@@ -108,10 +108,10 @@
         android:contentDescription="@string/todo"
         app:layout_constraintBottom_toTopOf="@+id/usernameField"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/backimage"
-        app:layout_constraintVertical_bias="0.709"
+        app:layout_constraintVertical_bias="0.923"
         app:srcCompat="@drawable/icon_trans2_cut" />
 
     <ImageView

@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/backimage4"
-        android:layout_width="398dp"
-        android:layout_height="805dp"
+        android:layout_width="490dp"
+        android:layout_height="853dp"
         android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
         android:layout_marginTop="32dp"
         android:contentDescription="@string/todo"
         app:layout_constraintEnd_toEndOf="@+id/backimage4"
-        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="@+id/backimage4"
         app:layout_constraintTop_toBottomOf="@+id/imageView14"
         app:srcCompat="@drawable/bigrectangle" />
@@ -36,7 +36,7 @@
         android:layout_height="202dp"
         android:contentDescription="@string/todo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rectangle1"
         app:srcCompat="@drawable/rectangle"
@@ -47,13 +47,14 @@
         android:layout_width="222dp"
         android:layout_height="39dp"
         android:layout_marginTop="24dp"
+        android:gravity="center"
         android:text="@string/account_creation"
         android:textAllCaps="true"
         android:textColor="#807979"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rectangle1" />
 
@@ -78,8 +79,8 @@
         android:id="@+id/backButton"
         android:layout_width="54dp"
         android:layout_height="49dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="84dp"
         android:contentDescription="@string/todo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -89,10 +90,10 @@
         android:id="@+id/imageView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="32dp"
         android:contentDescription="@string/todo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/usericon" />
@@ -116,7 +117,7 @@
         android:id="@+id/passwordField2"
         android:layout_width="212dp"
         android:layout_height="50dp"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/enter_a_password"
@@ -127,7 +128,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/rectangle2"
         app:layout_constraintStart_toStartOf="@+id/rectangle2"
         app:layout_constraintTop_toBottomOf="@+id/usernameField2"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/surnameField"
@@ -146,9 +147,9 @@
 
     <EditText
         android:id="@+id/usernameField2"
-        android:layout_width="215dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="88dp"
+        android:layout_width="211dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="96dp"
         android:ems="10"
         android:hint="@string/enter_a_username"
         android:importantForAutofill="no"
@@ -157,21 +158,21 @@
         android:textColorHint="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintHorizontal_bias="0.234"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="265dp"
         android:layout_height="39dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
         android:text="@string/patient_information"
         android:textAllCaps="true"
         android:textColor="#807979"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.71"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/rectangle1" />
 
@@ -204,17 +205,32 @@
 
     <ImageView
         android:id="@+id/warning"
-        android:layout_width="193dp"
-        android:layout_height="165dp"
+        android:layout_width="186dp"
+        android:layout_height="182dp"
         android:contentDescription="@string/todo"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/rectangle1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintHorizontal_bias="0.417"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.813"
+        app:layout_constraintVertical_bias="0.581"
         app:srcCompat="@drawable/noun_error" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        style="?android:attr/spinnerItemStyle"
+        android:singleLine="true"
+        android:layout_width="133dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="4dp"
+        android:textColor = "@android:color/darker_gray"
+        android:text="Gender"
+        android:textAlignment="textStart"
+        app:layout_constraintBottom_toBottomOf="@+id/rectangle1"
+        app:layout_constraintStart_toEndOf="@+id/dateField"
+        app:layout_constraintTop_toBottomOf="@+id/surnameField"
+        app:layout_constraintVertical_bias="0.375"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,6 +19,9 @@ class RegistrationFragment : Fragment() {
     private lateinit var password: EditText
     private lateinit var fAuth: FirebaseAuth
     private lateinit var registrationButton: Button
+    private lateinit var gender: Spinner
+
+    private var list_of_items = arrayOf("Man", "Woman")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -26,6 +29,23 @@ class RegistrationFragment : Fragment() {
         username = view.findViewById(R.id.usernameField2)
         password = view.findViewById(R.id.passwordField2)
         registrationButton = view.findViewById(R.id.registrationButton)
+
+        gender = view.findViewById(R.id.spinner)
+        /*
+        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item)
+        gender.adapter = arrayAdapter
+        gender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+        */
+
 
         // We disable the button of registration until we check all parameters are valid
         markButtonDisable(registrationButton)
@@ -120,6 +140,8 @@ class RegistrationFragment : Fragment() {
         button?.isEnabled = true
         button?.setBackgroundColor(ContextCompat.getColor(button.context, R.color.pink_dark))
     }
+
+
 
 
 

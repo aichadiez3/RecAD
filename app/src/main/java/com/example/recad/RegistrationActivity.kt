@@ -14,6 +14,8 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var signInButton: Button
     private lateinit var displayCalendar: ImageView
 
+    private var frag: Fragment? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
@@ -25,20 +27,25 @@ class RegistrationActivity : AppCompatActivity() {
 
         signInButton = findViewById(R.id.registrationButton)
         signInButton.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
+
+            frag = supportFragmentManager.findFragmentById(R.id.container)
+            if (frag == null) {
+
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.container, WelcomeFragment())
+                    .commit()
+
+            }
         }
 
         displayCalendar = findViewById(R.id.calendarImage)
-
-        /*
         displayCalendar.setOnClickListener{
 
             var frag = supportFragmentManager.findFragmentById(R.id.container)
             if (frag == null) {
 
-                frag = CalendarFragment()
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.container, frag)
+                    .add(R.id.container, CalendarFragment())
                     .commit()
 
             }
@@ -46,7 +53,7 @@ class RegistrationActivity : AppCompatActivity() {
 
 
         }
-    */
+
     }
 
 /*
@@ -69,6 +76,6 @@ class RegistrationActivity : AppCompatActivity() {
         }
  }*/
 
-    
+
 
 }

@@ -41,11 +41,31 @@
             android:exported="true" >
             <intent-filter>
                 <action android:name="com.example.recad.HomeActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".VoiceMenuActivity"
+            android:label="Voice menu"
+            android:parentActivityName=".HomeActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.example.recad.VoiceMenuActivity" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
 
+        <activity
+            android:name=".RecordingActivity"
+            android:label="Start recording"
+            android:parentActivityName=".VoiceMenuActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.example.recad.VoiceMenuActivity" />
+                <category android:name="android.intent.category.VOICE" />
+            </intent-filter>
+        </activity>
 
     </application>
 

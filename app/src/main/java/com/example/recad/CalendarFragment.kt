@@ -2,6 +2,8 @@ package com.example.recad
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +45,7 @@ class CalendarFragment : Fragment() {
 
 
         saveDate.setOnClickListener {
+            /*
             val selectedDate:Long = calendarView.date
             calendar.timeInMillis = selectedDate
 
@@ -51,8 +54,15 @@ class CalendarFragment : Fragment() {
 
             println(text.toString())
 
+             */
 
 
+            Handler(Looper.getMainLooper()).postDelayed({
+                activity?.let {
+                    val intent = Intent(it, RegistrationActivity::class.java)
+                    it.startActivity(intent)
+                }
+            },100)
         }
 
 

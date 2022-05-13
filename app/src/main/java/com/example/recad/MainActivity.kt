@@ -43,6 +43,11 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
         }
 
+        loginButton.setOnClickListener {
+            // check validations here
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+
 /*
         startActivity(Intent(this, LogInActivity::class.java).apply {
             // To pass any data to next activity
@@ -123,7 +128,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         Toast.makeText(this, "Top swipe", Toast.LENGTH_LONG).show()
     }
 
-    private fun onSwipeLeft() {
+    private fun onSwipeRight() {
 
         touch++
 
@@ -147,7 +152,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         }
     }
 
-    private fun onSwipeRight() {
+    private fun onSwipeLeft() {
 
         touch++
 

@@ -32,7 +32,7 @@ class CalendarFragment : Fragment() {
 
 
 
-        calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+        calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             // We save the selected date to be accessed by RegistrationFragment contoller
             calendar.set(year,month,dayOfMonth)
             calendarView.date = calendar.timeInMillis

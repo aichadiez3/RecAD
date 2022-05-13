@@ -2,11 +2,8 @@ package com.example.recad
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
@@ -27,6 +24,8 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //markButtonDisable(loginButton)
+
         detector = GestureDetectorCompat(this, DiaryGestureListener())
 
 
@@ -42,10 +41,20 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
             Toast.makeText(this@MainActivity, "Change password unavailable", Toast.LENGTH_LONG).show()
 
         }
+
         loginButton = findViewById(R.id.loginButton)
         loginButton.setOnClickListener {
-            // check validations here
+/*
+            var validation = validateForm()
+
+            if(validation){
+                markButtonEnable(loginButton)
+                startActivity(Intent(this, HomeActivity::class.java))
+            }
+
+ */
             startActivity(Intent(this, HomeActivity::class.java))
+
         }
 
 /*
@@ -188,4 +197,56 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         }
         transaction.commit()
     }
+
+/*
+
+    private fun validateForm(): Boolean {
+        val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.noun_error)
+        icon?.setVisible(true, false)
+        var validation = false
+
+        when {
+            TextUtils.isEmpty(username.text.toString().trim())->{
+                username.setError("Please enter username", icon)
+            }
+            TextUtils.isEmpty(password.text.toString().trim())->{
+                password.setError("Please enter password", icon)
+            }
+
+            username.text.toString().isNotEmpty() && password.text.isNotEmpty() -> {
+
+                //Checks if the username follows the correct format of an email id
+                if(username.text.toString().matches(Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"))){
+
+                    markButtonEnable(loginButton)
+                    validation = true
+
+
+                } else {
+                    username.setError("Enter a valid Email", icon)
+                    validation = false
+                }
+            }
+
+        }
+        return validation
+    }
+
+
+
+ */
+
+    /*
+    private fun markButtonDisable(button: Button){
+        button?.isEnabled = false
+        button?.setBackgroundColor(ContextCompat.getColor(button.context, R.color.gray_light))
+    }
+
+    private fun markButtonEnable(button: Button){
+        button?.isEnabled = true
+        button?.setBackgroundColor(ContextCompat.getColor(button.context, R.color.pink_dark))
+    }
+
+     */
+
 }

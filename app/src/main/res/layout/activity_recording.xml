@@ -12,11 +12,37 @@
         android:layout_width="139dp"
         android:layout_height="126dp"
         android:contentDescription="TODO"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499"
         app:srcCompat="@drawable/hd_black_pink_voice_recorder_phone_flat_icon_png_316319219134wdqikepox_removebg_preview" />
+
+    <ImageView
+        android:id="@+id/stopButton"
+        android:layout_width="157dp"
+        android:layout_height="144dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/stop" />
+
+    <TextView
+        android:id="@+id/alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/waiting_for_permissions"
+        android:textColor="#DFD2439D"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/stopButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.726" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

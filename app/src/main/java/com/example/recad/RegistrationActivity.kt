@@ -43,15 +43,15 @@ class RegistrationActivity : AppCompatActivity() {
 
             }
 
-         */
+
 
         }
-
+    */
     }
 
-
+/*
     fun changeActivity(view: View){
-        /*
+
         startActivity(Intent(this, LogInActivity::class.java).apply {
             // To pass any data to next activity
             putExtra("extra_1", value1)
@@ -67,8 +67,8 @@ class RegistrationActivity : AppCompatActivity() {
             intent.putExtra("Password", password)
             startActivity(intent);
         }
- }
-*/
-    }
+ }*/
+
+    
 
 }

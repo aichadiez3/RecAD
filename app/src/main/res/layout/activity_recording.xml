@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+
     <ImageView
         android:id="@+id/recordButton"
         android:layout_width="139dp"
@@ -16,4 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/hd_black_pink_voice_recorder_phone_flat_icon_png_316319219134wdqikepox_removebg_preview" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

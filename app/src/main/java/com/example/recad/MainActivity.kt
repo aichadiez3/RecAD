@@ -20,7 +20,8 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
     private lateinit var registerAccount: ImageView
     private lateinit var changePass: TextView
 
-    private lateinit var frag: Fragment
+    private var frag_in: Fragment? = null
+    private var frag: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,7 +156,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     private fun onSwipeLeft() {
 
-        var frag_in = supportFragmentManager.findFragmentById(R.id.container)
+        frag_in = supportFragmentManager.findFragmentById(R.id.container)
 
         if (frag_in != null) {
             frag = frag_in

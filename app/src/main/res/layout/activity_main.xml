@@ -44,10 +44,12 @@
         android:text="@string/log_in"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/extendPoints"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.167"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/resetPasswordButton"
-        app:layout_constraintVertical_bias="0.142"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="28dp" />
+        app:layout_constraintVertical_bias="0.114"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/resetPasswordButton"

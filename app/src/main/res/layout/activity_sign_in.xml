@@ -73,7 +73,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.787"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints,TextContrastCheck" />
 
     <ImageView
         android:id="@+id/backButton"
@@ -81,10 +81,12 @@
         android:layout_height="49dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="84dp"
+        android:clickable="true"
         android:contentDescription="@string/todo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/flecha" />
+        app:srcCompat="@drawable/flecha"
+        android:focusable="true" />
 
     <ImageView
         android:id="@+id/imageView14"
@@ -96,7 +98,8 @@
         app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/usericon" />
+        app:srcCompat="@drawable/usericon"
+        tools:ignore="ImageContrastCheck" />
 
     <EditText
         android:id="@+id/nameField"
@@ -108,7 +111,7 @@
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:textColor="@android:color/darker_gray"
-        android:textColorHint="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -124,7 +127,7 @@
         android:importantForAutofill="no"
         android:inputType="textPassword"
         android:textColor="@android:color/darker_gray"
-        android:textColorHint="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle2"
         app:layout_constraintStart_toStartOf="@+id/rectangle2"
         app:layout_constraintTop_toBottomOf="@+id/usernameField2"
@@ -133,14 +136,14 @@
     <EditText
         android:id="@+id/surnameField"
         android:layout_width="320dp"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/surname"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:textColor="@android:color/darker_gray"
-        android:textColorHint="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameField" />
@@ -155,7 +158,7 @@
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:textColor="@android:color/darker_gray"
-        android:textColorHint="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.234"
@@ -199,7 +202,7 @@
         android:importantForAutofill="no"
         android:inputType="date"
         android:textColor="@android:color/darker_gray"
-        android:textColorHint="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
         app:layout_constraintStart_toEndOf="@+id/calendarImage"
         app:layout_constraintTop_toBottomOf="@+id/surnameField" />
 
@@ -220,17 +223,18 @@
     <Spinner
         android:id="@+id/spinner"
         style="?android:attr/spinnerItemStyle"
-        android:singleLine="true"
         android:layout_width="133dp"
         android:layout_height="59dp"
         android:layout_marginStart="4dp"
-        android:textColor = "@android:color/darker_gray"
+        android:contentDescription="@string/gender"
+        android:singleLine="true"
         android:text="Gender"
         android:textAlignment="textStart"
+        android:textColor="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle1"
         app:layout_constraintStart_toEndOf="@+id/dateField"
         app:layout_constraintTop_toBottomOf="@+id/surnameField"
-        app:layout_constraintVertical_bias="0.375"/>
+        app:layout_constraintVertical_bias="0.375" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,6 +37,7 @@
         <activity
             android:name=".HomeActivity"
             android:label="Home"
+            android:parentActivityName=".MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="com.example.recad.HomeActivity" />

@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
             Toast.makeText(this@MainActivity, "Change password unavailable", Toast.LENGTH_LONG).show()
 
         }
-
+        loginButton = findViewById(R.id.loginButton)
         loginButton.setOnClickListener {
             // check validations here
             startActivity(Intent(this, HomeActivity::class.java))

@@ -47,7 +47,7 @@
 
         <activity
             android:name=".VoiceMenuActivity"
-            android:label="Voice menu"
+            android:label="VoiceMenu"
             android:parentActivityName=".HomeActivity"
             android:exported="true" >
             <intent-filter>
@@ -58,11 +58,11 @@
 
         <activity
             android:name=".RecordingActivity"
-            android:label="Start recording"
+            android:label="Recording"
             android:parentActivityName=".VoiceMenuActivity"
             android:exported="true" >
             <intent-filter>
-                <action android:name="com.example.recad.VoiceMenuActivity" />
+                <action android:name="com.example.recad.RecordingActivity" />
                 <category android:name="android.intent.category.VOICE" />
             </intent-filter>
         </activity>

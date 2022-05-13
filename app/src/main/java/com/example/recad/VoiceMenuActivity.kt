@@ -22,7 +22,7 @@ class VoiceMenuActivity : AppCompatActivity() {
             startActivity(Intent(this, RecordingActivity::class.java))
         }
 
-        profileButton = findViewById(R.id.voiceButton)
+        profileButton = findViewById(R.id.profileButton)
         profileButton.setOnClickListener {
             Toast.makeText(this, "Option is unavailable", Toast.LENGTH_LONG).show()
         }

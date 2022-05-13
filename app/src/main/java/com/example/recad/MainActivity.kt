@@ -2,6 +2,7 @@ package com.example.recad
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -20,28 +21,11 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
     private lateinit var registerAccount: ImageView
     private lateinit var changePass: TextView
 
-    private var frag_in: Fragment? = null
-    private var frag: Fragment? = null
+    private var touch: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        /*
-        // Create a new fragment using the manager
-        var frag = supportFragmentManager
-            .findFragmentById(R.id.container)
-
-        // Check the fragment has not already been initialized
-        if (frag == null) {
-            // Initialize the fragment based on our SimpleFragment
-                frag = LogInFragment()
-                    supportFragmentManager.beginTransaction()
-                        .add(R.id.container, frag)
-                            //.add(R.id.container, LogInFragment())   --> Also valid if we remove the variable frag declaration
-                        .commit()
-        }
-        */
 
         detector = GestureDetectorCompat(this, DiaryGestureListener())
 
@@ -139,46 +123,54 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         Toast.makeText(this, "Top swipe", Toast.LENGTH_LONG).show()
     }
 
-    private fun onSwipeRight() {
-        var frag = supportFragmentManager
-            .findFragmentById(R.id.container)
+    private fun onSwipeLeft() {
 
-        if (frag == AboutUsFragment()) {
-            frag = InfoFragment()
+        touch++
+
+        var frag = supportFragmentManager.findFragmentById(R.id.container)
+        if (frag == null) {
+
+            frag = DescriptionFragment()
             supportFragmentManager.beginTransaction()
                 .add(R.id.container, frag)
-                //.add(R.id.container, LogInFragment())   --> Also valid if we remove the variable frag declaration
+                //.add(R.id.container, DescriptionFragment())   --> Also valid if we remove the variable frag declaration
                 .commit()
+
         } else {
+            frag = AboutUsFragment()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.container, frag)
+                .commit()
+        }
+        if(touch==3){
             startActivity(Intent(this, MainActivity::class.java))
         }
     }
 
-    private fun onSwipeLeft() {
+    private fun onSwipeRight() {
 
-        frag_in = supportFragmentManager.findFragmentById(R.id.container)
+        touch++
 
-        if (frag_in != null) {
-            frag = frag_in
+        var frag = supportFragmentManager.findFragmentById(R.id.container)
 
-            if (frag == AboutUsFragment()){
-                frag = InfoFragment()
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.container, frag as InfoFragment)
-                    //.add(R.id.container, LogInFragment())   --> Also valid if we remove the variable frag declaration
-                    .commit()
-            } else {
-                startActivity(Intent(this, MainActivity::class.java))
-            }
-        } else {
+        if (frag == null) {
+
             frag = AboutUsFragment()
             supportFragmentManager.beginTransaction()
-                .add(R.id.container, frag as AboutUsFragment)
-                //.add(R.id.container, LogInFragment())   --> Also valid if we remove the variable frag declaration
+                .add(R.id.container, frag)
                 .commit()
+
+        } else {
+
+            frag = DescriptionFragment()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.container, frag)
+                .commit()
+
         }
-
-
+        if(touch==3){
+            startActivity(Intent(this, MainActivity::class.java))
+        }
     }
 
     override fun navigateFrag(fragment: Fragment, addToStack: Boolean){

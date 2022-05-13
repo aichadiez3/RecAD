@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
         detector = GestureDetectorCompat(this, DiaryGestureListener())
 
-    // Open a new activity for registration
 
+        // Open a new activity for registration
         registerAccount = findViewById(R.id.createAccount)
 
         registerAccount.setOnClickListener{

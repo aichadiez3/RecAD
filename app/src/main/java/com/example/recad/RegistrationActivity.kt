@@ -6,11 +6,13 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
 class RegistrationActivity : AppCompatActivity() {
 
     private lateinit var backButton: ImageView
     private lateinit var signInButton: Button
+    private lateinit var displayCalendar: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +28,27 @@ class RegistrationActivity : AppCompatActivity() {
             startActivity(Intent(this, HomeActivity::class.java))
         }
 
+        displayCalendar = findViewById(R.id.calendarImage)
+
+        /*
+        displayCalendar.setOnClickListener{
+
+            var frag = supportFragmentManager.findFragmentById(R.id.container)
+            if (frag == null) {
+
+                frag = CalendarFragment()
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.container, frag)
+                    .commit()
+
+            }
+
+         */
+
+        }
+
     }
+
 
     fun changeActivity(view: View){
         /*

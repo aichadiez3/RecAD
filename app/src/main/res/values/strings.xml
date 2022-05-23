@@ -18,4 +18,10 @@
     <string name="select_your_birthdate">Select your birthdate</string>
     <string name="welcome">Welcome</string>
     <string name="waiting_for_permissions">Waiting for permissions</string>
+
+    <string-array name="options">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
 </resources>

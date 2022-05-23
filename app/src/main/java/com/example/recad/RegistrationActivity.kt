@@ -3,8 +3,7 @@ package com.example.recad
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
@@ -36,6 +35,28 @@ class RegistrationActivity : AppCompatActivity() {
                     .commit()
 
             }
+        }
+
+        val spinner = findViewById<Spinner>(R.id.spinner)
+
+        //val lista = listOf("Male","Female")
+        val lista = resources.getStringArray(R.array.options)
+
+        // Crear adaptador visual para añadir cada uno de lso elementos al spinner
+        val adaptador = ArrayAdapter(this, android.R.layout.simple_spinner_item, lista)
+        spinner.adapter = adaptador
+
+        //get value of spinner
+        spinner.onItemSelectedListener = object:
+                AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Toast.makeText(this@RegistrationActivity, "Elemento seleccionado: " + lista[position], Toast.LENGTH_LONG).show()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
         }
 
         displayCalendar = findViewById(R.id.calendarImage)

@@ -24,4 +24,10 @@
         <item>Female</item>
     </string-array>
 
+    <string-array name="recordTag">
+        <item>MCI</item>
+        <item>Alzheimer-A</item>
+        <item>Reference-NA</item>
+    </string-array>
+
 </resources>

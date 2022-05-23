@@ -20,6 +20,7 @@
     <string name="waiting_for_permissions">Waiting for permissions</string>
 
     <string-array name="options">
+        <item>Gender…</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>

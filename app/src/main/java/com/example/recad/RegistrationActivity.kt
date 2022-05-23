@@ -43,17 +43,18 @@ class RegistrationActivity : AppCompatActivity() {
         val lista = resources.getStringArray(R.array.options)
 
         // Crear adaptador visual para añadir cada uno de lso elementos al spinner
-        val adaptador = ArrayAdapter(this, android.R.layout.simple_spinner_item, lista)
+        val adaptador = ArrayAdapter(this, R.layout.custom_spinner, lista)
+        adaptador.setDropDownViewResource(R.layout.custom_spinner_dropdown)
         spinner.adapter = adaptador
 
         //get value of spinner
         spinner.onItemSelectedListener = object:
                 AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Toast.makeText(this@RegistrationActivity, "Elemento seleccionado: " + lista[position], Toast.LENGTH_LONG).show()
+                //Toast.makeText(this@RegistrationActivity, "Elemento seleccionado: " + lista[position], Toast.LENGTH_LONG).show()
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
 

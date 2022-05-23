@@ -69,10 +69,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.898"
+        app:layout_constraintHorizontal_bias="0.884"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.787"
         tools:ignore="MissingConstraints,TextContrastCheck" />
 
     <ImageView
@@ -150,9 +149,9 @@
 
     <EditText
         android:id="@+id/usernameField2"
-        android:layout_width="215dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="96dp"
+        android:layout_width="209dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="100dp"
         android:ems="10"
         android:hint="@string/enter_a_username"
         android:importantForAutofill="no"
@@ -161,7 +160,7 @@
         android:textColorHint="#A1887F"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.234"
+        app:layout_constraintHorizontal_bias="0.222"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -222,19 +221,21 @@
 
     <Spinner
         android:id="@+id/spinner"
-        style="?android:attr/spinnerItemStyle"
-        android:layout_width="133dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="4dp"
+        style="@style/spinnerItemStyle"
+        android:layout_width="118dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/holo_blue_light"
         android:contentDescription="@string/gender"
-        android:singleLine="true"
-        android:text="Gender"
-        android:textAlignment="textStart"
-        android:textColor="@android:color/darker_gray"
+        android:entries = "@array/options"
+        android:spinnerMode="dialog"
+        android:hint="@string/gender"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle1"
-        app:layout_constraintStart_toEndOf="@+id/dateField"
+        app:layout_constraintEnd_toEndOf="@+id/rectangle1"
+        app:layout_constraintHorizontal_bias="0.873"
+        app:layout_constraintStart_toStartOf="@+id/rectangle1"
         app:layout_constraintTop_toBottomOf="@+id/surnameField"
-        app:layout_constraintVertical_bias="0.375" />
+        app:layout_constraintVertical_bias="0.338" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

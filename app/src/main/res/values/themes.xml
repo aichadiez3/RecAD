@@ -10,7 +10,7 @@
         <item name="colorSecondary">@color/gray_dark</item>
         <item name="colorSecondaryVariant">@color/gray_light</item>
         <item name="colorOnSecondary">@color/gray_dark</item>
-        <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
+
         <!-- Status bar color.
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         -->
@@ -21,13 +21,13 @@
     <item name="colorPrimary">@color/white</item>
     <item name="colorPrimaryVariant">@color/pink_light</item>
     <item name="colorOnPrimary">@color/white</item>
-    <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
+
 
     </style>
 
-    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
-        <item name="android:textColor">@android:color/darker_gray</item>
-    </style>
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem"></style>
+
+    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem"></style>
 
 
 </resources>

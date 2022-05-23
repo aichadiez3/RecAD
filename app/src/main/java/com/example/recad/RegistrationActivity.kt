@@ -12,12 +12,15 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var backButton: ImageView
     private lateinit var signInButton: Button
     private lateinit var displayCalendar: ImageView
+    private lateinit var editDate : EditText
 
     private var frag: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+
+        editDate = findViewById(R.id.dateField)
 
         backButton = findViewById(R.id.backButton)
         backButton.setOnClickListener {
@@ -63,6 +66,9 @@ class RegistrationActivity : AppCompatActivity() {
         displayCalendar = findViewById(R.id.calendarImage)
         displayCalendar.setOnClickListener{
 
+            showDatePickerDialog()
+
+/*
             var frag = supportFragmentManager.findFragmentById(R.id.container)
             if (frag == null) {
 
@@ -72,10 +78,24 @@ class RegistrationActivity : AppCompatActivity() {
 
             }
 
-
+*/
 
         }
 
+
+
+
+
+    }
+
+    private fun showDatePickerDialog(){
+        val datePicker = CalendarFragment { day, month, year -> onDateSelected(day, month, year) }
+        datePicker.show(supportFragmentManager, "datePicker")
+
+    }
+
+    fun onDateSelected(day:Int, month:Int, year:Int){
+        editDate.setText("$day/"+(month+1).toString() +"/$year")
     }
 
 /*

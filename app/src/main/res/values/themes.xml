@@ -22,12 +22,20 @@
     <item name="colorPrimaryVariant">@color/pink_light</item>
     <item name="colorOnPrimary">@color/white</item>
 
-
     </style>
 
     <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem"></style>
-
     <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem"></style>
 
+
+    <style name="datePickerTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/pink_dark</item>
+        <!--selected Item color-->
+        <item name="colorControlActivated">@color/pink_dark</item>
+        <!--Calender Background color -->
+        <item name="android:windowBackground">@color/pink_light</item>
+        <!-- Ok Cancel Color-->
+        <item name="android:textColor">@color/pink_dark</item>
+    </style>
 
 </resources>

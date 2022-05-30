@@ -4,35 +4,59 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 
 class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     private lateinit var detector: GestureDetectorCompat
-    private lateinit var username: EditText
-    private lateinit var password: EditText
-    private lateinit var loginButton: Button
+    private lateinit var loginButton: ImageView
     private lateinit var registerAccount: ImageView
     private lateinit var changePass: TextView
-
     private var touch: Int = 0
+
+    private val emailLiveData = MutableLiveData<String>()
+    private val passwordLiveData = MutableLiveData<String>()
+
+    private val isValidLiveData = MediatorLiveData<Boolean>().apply {
+        this.value=false
+
+        addSource(emailLiveData) { email ->
+            // Monitors changes in email block
+            val passw = passwordLiveData.value
+            this.value = validateForm(email, passw)
+        }
+
+        addSource(passwordLiveData) { passw ->
+            // Monitors changes in email block
+            val email = emailLiveData.value
+            this.value = validateForm(email, passw)
+        }
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //markButtonDisable(loginButton)
+
 
         detector = GestureDetectorCompat(this, DiaryGestureListener())
 
 
-        // Open a new activity for registration
         registerAccount = findViewById(R.id.createAccount)
-
         registerAccount.setOnClickListener{
+            // Opens a new activity for registration
             startActivity(Intent(this, RegistrationActivity::class.java))
         }
 
@@ -42,30 +66,38 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
         }
 
+        val usernameField = findViewById<EditText>(R.id.usernameField)
+        val passwordField = findViewById<EditText>(R.id.passwordField)
         loginButton = findViewById(R.id.loginButton)
-        loginButton.setOnClickListener {
-/*
-            var validation = validateForm()
 
-            if(validation){
-                markButtonEnable(loginButton)
-                startActivity(Intent(this, HomeActivity::class.java))
-            }
-
- */
-            startActivity(Intent(this, HomeActivity::class.java))
-
+        usernameField.doOnTextChanged { text, _, _, _ ->
+            emailLiveData.value = text?.toString()
         }
 
-/*
-        startActivity(Intent(this, LogInActivity::class.java).apply {
-            // To pass any data to next activity
-            putExtra("extra_1", value1)
-            putExtra("extra_2", value2)
-            putExtra("extra_3", value3)
-        })
-*/
+        passwordField.doOnTextChanged { text, _, _, _ ->
+            passwordLiveData.value = text?.toString()
+        }
+
+        isValidLiveData.observe(this) { isValid ->
+            loginButton.isVisible = isValid
+            loginButton.isEnabled = isValid
+        }
+
+
+        loginButton.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+
+
     }
+
+    private fun validateForm(email: String?, password:String?) : Boolean {
+        val isValidEmail = email != null && email.isNotBlank() && email.contains("@")
+        val isValidPassw = password != null && password.isNotBlank() && password.length >= 6
+        return isValidEmail && isValidPassw
+    }
+
+
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return if(detector.onTouchEvent(event)){
@@ -130,7 +162,6 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     private fun onSwipeBottom() {
         Toast.makeText(this, "Bottom swipe", Toast.LENGTH_LONG).show()
-
     }
 
     private fun onSwipeTop() {
@@ -198,55 +229,5 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         transaction.commit()
     }
 
-/*
-
-    private fun validateForm(): Boolean {
-        val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.noun_error)
-        icon?.setVisible(true, false)
-        var validation = false
-
-        when {
-            TextUtils.isEmpty(username.text.toString().trim())->{
-                username.setError("Please enter username", icon)
-            }
-            TextUtils.isEmpty(password.text.toString().trim())->{
-                password.setError("Please enter password", icon)
-            }
-
-            username.text.toString().isNotEmpty() && password.text.isNotEmpty() -> {
-
-                //Checks if the username follows the correct format of an email id
-                if(username.text.toString().matches(Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"))){
-
-                    markButtonEnable(loginButton)
-                    validation = true
-
-
-                } else {
-                    username.setError("Enter a valid Email", icon)
-                    validation = false
-                }
-            }
-
-        }
-        return validation
-    }
-
-
-
- */
-
-    /*
-    private fun markButtonDisable(button: Button){
-        button?.isEnabled = false
-        button?.setBackgroundColor(ContextCompat.getColor(button.context, R.color.gray_light))
-    }
-
-    private fun markButtonEnable(button: Button){
-        button?.isEnabled = true
-        button?.setBackgroundColor(ContextCompat.getColor(button.context, R.color.pink_dark))
-    }
-
-     */
 
 }

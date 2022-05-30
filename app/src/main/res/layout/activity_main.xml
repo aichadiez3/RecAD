@@ -49,6 +49,7 @@
         android:inputType="textPassword"
         android:textColorHighlight="@color/pink_light"
         android:textColorHint="#BDBDBD"
+        android:textColorLink="@color/pink_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,6 +67,7 @@
         android:inputType="textPersonName"
         android:textColorHighlight="@color/pink_light"
         android:textColorHint="#BDBDBD"
+        android:textColorLink="@color/pink_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -90,29 +92,15 @@
         android:id="@+id/createAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
         android:contentDescription="@string/todo"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toEndOf="@+id/loginButton"
-        app:srcCompat="@drawable/createaccount"
-        tools:ignore="ImageContrastCheck" />
-
-    <Button
-        android:id="@+id/loginButton"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="139dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="204dp"
-        android:background="@color/pink_dark"
-        android:text="@string/log_in"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordField"
-        app:layout_constraintVertical_bias="0.09" />
+        app:layout_constraintVertical_bias="0.872"
+        app:srcCompat="@drawable/createaccount"
+        tools:ignore="ImageContrastCheck" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -123,5 +111,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/extend_points" />
+
+    <ImageView
+        android:id="@+id/loginButton"
+        android:layout_width="116dp"
+        android:layout_height="109dp"
+        app:layout_constraintBottom_toTopOf="@+id/createAccount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordField"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/loginimage"
+        tools:ignore="ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

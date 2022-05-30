@@ -31,43 +31,6 @@ class CalendarFragment (val listener: (day:Int, month:Int, year:Int) -> Unit): D
         return picker
     }
 
-/*
-   private lateinit var saveDate: Button
-   private lateinit var calendarView: CalendarView
-   private lateinit var text: TextView
-
-   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-       var view = inflater.inflate(R.layout.calendar_view, container, true)
-
-
-    saveDate = view.findViewById<Button>(R.id.saveDate)
-       calendarView = view.findViewById<CalendarView>(R.id.calendarView)
-       text = view.findViewById<TextView>(R.id.textView3)
-
-
-       saveDate.setOnClickListener {
-
-
-
-
-           Handler(Looper.getMainLooper()).postDelayed({
-               activity?.let {
-                   val intent = Intent(it, RegistrationActivity::class.java)
-                   it.startActivity(intent)
-               }
-           },100)
-
-       }
-
-
-
-
-
-
-    return inflater.inflate(R.layout.calendar_view, container, false)
-    }
-*/
-
 
 
 }

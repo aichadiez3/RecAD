@@ -2,47 +2,63 @@ package com.example.recad
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GestureDetectorCompat
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 
 class RegistrationActivity : AppCompatActivity() {
 
-    private lateinit var backButton: ImageView
-    private lateinit var signInButton: Button
+    private lateinit var detector: GestureDetectorCompat
+
+    private lateinit var signInButton: ImageView
     private lateinit var displayCalendar: ImageView
     private lateinit var editDate : EditText
 
     private var frag: Fragment? = null
 
+    private val emailLiveData = MutableLiveData<String>()
+    private val passwordLiveData = MutableLiveData<String>()
+
+    private val isValidLiveData = MediatorLiveData<Boolean>().apply {
+        this.value=false
+
+        addSource(emailLiveData) { email ->
+            // Monitors changes in email block
+            val passw = passwordLiveData.value
+            this.value = validateForm(email, passw)
+        }
+
+        addSource(passwordLiveData) { passw ->
+            // Monitors changes in email block
+            val email = emailLiveData.value
+            this.value = validateForm(email, passw)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        setContentView(R.layout.activity_sign_up)
 
-        editDate = findViewById(R.id.dateField)
-
-        backButton = findViewById(R.id.backButton)
-        backButton.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
+        detector = GestureDetectorCompat(this, DiaryGestureListener())
 
         signInButton = findViewById(R.id.registrationButton)
         signInButton.setOnClickListener {
-
             frag = supportFragmentManager.findFragmentById(R.id.container)
             if (frag == null) {
-
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.container, WelcomeFragment())
-                    .commit()
-
+                supportFragmentManager.beginTransaction().add(R.id.container, WelcomeFragment()).commit()
             }
         }
 
         val spinner = findViewById<Spinner>(R.id.spinner)
 
-        //val lista = listOf("Male","Female")
         val lista = resources.getStringArray(R.array.options)
 
         // Crear adaptador visual para añadir cada uno de lso elementos al spinner
@@ -62,28 +78,29 @@ class RegistrationActivity : AppCompatActivity() {
             }
 
         }
+        editDate = findViewById(R.id.dateField)
 
         displayCalendar = findViewById(R.id.calendarImage)
         displayCalendar.setOnClickListener{
-
             showDatePickerDialog()
-
-/*
-            var frag = supportFragmentManager.findFragmentById(R.id.container)
-            if (frag == null) {
-
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.container, CalendarFragment())
-                    .commit()
-
-            }
-
-*/
-
         }
 
 
+        val usernameField = findViewById<EditText>(R.id.usernameField2)
+        val passwordField = findViewById<EditText>(R.id.passwordField2)
 
+        usernameField.doOnTextChanged { text, _, _, _ ->
+            emailLiveData.value = text?.toString()
+        }
+
+        passwordField.doOnTextChanged { text, _, _, _ ->
+            passwordLiveData.value = text?.toString()
+        }
+
+        isValidLiveData.observe(this) { isValid ->
+            signInButton.isVisible = isValid
+            signInButton.isEnabled = isValid
+        }
 
 
     }
@@ -98,26 +115,60 @@ class RegistrationActivity : AppCompatActivity() {
         editDate.setText("$day/"+(month+1).toString() +"/$year")
     }
 
-/*
-    fun changeActivity(view: View){
+    private fun validateForm(email: String?, password:String?) : Boolean {
+        val isValidEmail = email != null && email.isNotBlank() && email.contains("@")
+        val isValidPassw = password != null && password.isNotBlank() && password.length >= 6
+        return isValidEmail && isValidPassw
+    }
 
-        startActivity(Intent(this, LogInActivity::class.java).apply {
-            // To pass any data to next activity
-            putExtra("extra_1", value1)
-            putExtra("extra_2", value2)
-            putExtra("extra_3", value3)
-        })
-
-        button.setOnClickListener {
-            val intent = Intent(this@MainActivity,SecondActivity::class.java);
-            var userName = username.text.toString()
-            var password = password_field.text.toString()
-            intent.putExtra("Username", userName)
-            intent.putExtra("Password", password)
-            startActivity(intent);
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        return if(detector.onTouchEvent(event)){
+            true
+        } else {
+            super.onTouchEvent(event)
         }
- }*/
+    }
+    inner class DiaryGestureListener : GestureDetector.SimpleOnGestureListener() {
 
+        private val SWIPE_THRESHOLD = 100
+        private val SWIPE_VELOCITY_THRESHOLD = 100
+
+        override fun onFling(downEvent: MotionEvent?, moveEvent: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
+
+            var diffX = moveEvent?.x?.minus(downEvent!!.x) ?: 0.0F
+            var diffY = moveEvent?.y?.minus(downEvent!!.y) ?: 0.0F
+
+            return if(Math.abs(diffX) > Math.abs(diffY)){
+                //this is a left or right swipe
+                if(Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD){
+                    if(diffX > 0){
+                        //this@RegistrationActivity.onSwipeRight()
+                    } else {
+                        //this@RegistrationActivity.onSwipeLeft()
+                    }
+                    true
+                } else {
+                    super.onFling(downEvent, moveEvent, velocityX, velocityY)
+                }
+            } else {
+                // This is either a bottom or top swipe
+                if(Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD){
+                    if(diffY > 0){
+                        this@RegistrationActivity.onSwipeTop()
+                    } else {
+                        //this@RegistrationActivity.onSwipeBottom()
+                    }
+                    true
+                } else {
+                    super.onFling(downEvent, moveEvent, velocityX, velocityY)
+                }
+            }
+        }
+    }
+
+    private fun onSwipeTop() {
+        startActivity(Intent(this, MainActivity::class.java))
+    }
 
 
 }

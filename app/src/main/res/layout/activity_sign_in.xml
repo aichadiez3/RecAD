@@ -58,22 +58,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rectangle1" />
 
-    <Button
-        android:id="@+id/registrationButton"
-        android:layout_width="117dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="52dp"
-        android:background="@color/pink_dark"
-        android:fontFamily="sans-serif"
-        android:text="@string/sign_up"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="@+id/rectangle2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.884"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        tools:ignore="MissingConstraints,TextContrastCheck" />
-
     <ImageView
         android:id="@+id/backButton"
         android:layout_width="54dp"
@@ -237,5 +221,12 @@
         app:layout_constraintTop_toBottomOf="@+id/surnameField"
         app:layout_constraintVertical_bias="0.338" />
 
+    <ImageView
+        android:id="@+id/registrationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/signupimage"
+        tools:layout_editor_absoluteX="271dp"
+        tools:layout_editor_absoluteY="572dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pink_dark">
+
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="410dp"
+        android:layout_height="773dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/round_rectangle" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="222dp"
+        android:layout_height="39dp"
+        android:gravity="center"
+        android:text="@string/account_creation"
+        android:textAllCaps="true"
+        android:textColor="#807979"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/usernameField2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView8"
+        app:layout_constraintVertical_bias="0.944" />
+
+    <EditText
+        android:id="@+id/nameField"
+        android:layout_width="319dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:hint="@string/name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
+    <EditText
+        android:id="@+id/passwordField2"
+        android:layout_width="281dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="@string/enter_a_password"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.684"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameField2" />
+
+    <EditText
+        android:id="@+id/usernameField2"
+        android:layout_width="280dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="424dp"
+        android:ems="10"
+        android:hint="@string/enter_a_username"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.687"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
+    <EditText
+        android:id="@+id/surnameField"
+        android:layout_width="320dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/surname"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameField" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="265dp"
+        android:layout_height="39dp"
+        android:gravity="center"
+        android:text="@string/patient_information"
+        android:textAllCaps="true"
+        android:textColor="#807979"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/nameField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.308"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView8"
+        app:layout_constraintVertical_bias="0.796" />
+
+    <EditText
+        android:id="@+id/dateField"
+        android:layout_width="253dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/select_birthdate"
+        android:importantForAutofill="no"
+        android:inputType="date"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.019"
+        app:layout_constraintStart_toEndOf="@+id/calendarImage"
+        app:layout_constraintTop_toBottomOf="@+id/surnameField" />
+
+    <ImageView
+        android:id="@+id/calendarImage"
+        android:layout_width="58dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/surnameField"
+        app:srcCompat="@drawable/noun_calendar_918451"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        style="@style/spinnerItemStyle"
+        android:layout_width="158dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        android:contentDescription="@string/gender"
+        android:entries="@array/options"
+        android:hint="@string/gender"
+        android:spinnerMode="dialog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.189"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateField" />
+
+    <ImageView
+        android:id="@+id/registrationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordField2"
+        app:srcCompat="@drawable/signupimage" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="45dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/passwordField2"
+        app:layout_constraintEnd_toStartOf="@+id/usernameField2"
+        app:layout_constraintHorizontal_bias="0.755"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.583"
+        app:srcCompat="@drawable/noun_email" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="43dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/passwordField2"
+        app:layout_constraintHorizontal_bias="0.782"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:srcCompat="@drawable/noun_password" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

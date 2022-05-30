@@ -1,6 +1,7 @@
 package com.example.recad
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Build
@@ -12,9 +13,12 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Suppress("DEPRECATION")
 class RecordingActivity : AppCompatActivity() {
 
     private lateinit var startButton: ImageView
@@ -22,6 +26,7 @@ class RecordingActivity : AppCompatActivity() {
     private lateinit var alert: TextView
     private lateinit var mr: MediaRecorder
 
+    @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,25 +37,40 @@ class RecordingActivity : AppCompatActivity() {
         alert = findViewById(R.id.alert)
 
 
-        val sdf = SimpleDateFormat("dd-M-yyyy-hh_mm_ss")
+        val sdf = SimpleDateFormat("dd-M-yyyy-hhmmss")
         val currentDate = sdf.format(Date())
-        println("Date is ----> "+currentDate)
 
-        var path:String = Environment.getExternalStorageDirectory().toString() + "/recording-"+currentDate.toString()+".3gp" // esto es el nombre del archivo a guardar
-        mr = MediaRecorder()
+
 
         // We ask for recording permission
         if(ActivityCompat.checkSelfPermission(this@RecordingActivity, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE), 111)
 
-            enableStart()
+            val path:String = "/audioRecord/record-$currentDate.3gp"
+            Files.createDirectory(Paths.get(path))
+            //println(Paths.get(path).toAbsolutePath())
+
+            val compPath:String = Environment.getExternalStorageDirectory().absolutePath.toString() + path // esto es el nombre del archivo a guardar
+            val state = Environment.getExternalStorageState()
+
+
+            mr = MediaRecorder()
+
+            if (state != Environment.MEDIA_MOUNTED) {
+                enableStart()
+            } else {
+                alert.text="No SD card was found"
+            }
+
+
 
             startButton.setOnClickListener{
+
                 mr.setAudioSource(MediaRecorder.AudioSource.MIC)
                 mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
                 mr.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB) // iS THE FORMAT FOR OPTIMIZING THE SPEECH CODING
 
-                mr.setOutputFile(path)
+                mr.setOutputFile(compPath)
 
                 mr.prepare()
                 mr.start()
@@ -63,6 +83,7 @@ class RecordingActivity : AppCompatActivity() {
             // To stop recording
             stopButton.setOnClickListener{
                 mr.stop()
+                mr.release()
                 enableStart()
 
             }

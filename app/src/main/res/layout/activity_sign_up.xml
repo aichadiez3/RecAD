@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="410dp"
-        android:layout_height="773dp"
+        android:layout_width="393dp"
+        android:layout_height="772dp"
         android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -31,10 +31,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/usernameField2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintHorizontal_bias="0.789"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView8"
-        app:layout_constraintVertical_bias="0.944" />
+        app:layout_constraintVertical_bias="0.963" />
 
     <EditText
         android:id="@+id/nameField"
@@ -56,7 +56,7 @@
         android:id="@+id/passwordField2"
         android:layout_width="281dp"
         android:layout_height="56dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="@string/enter_a_password"
         android:importantForAutofill="no"
@@ -64,15 +64,26 @@
         android:textColor="@android:color/darker_gray"
         android:textColorHint="#A1887F"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.684"
+        app:layout_constraintHorizontal_bias="0.678"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameField2" />
+
+    <ImageView
+        android:id="@+id/registrationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordField2"
+        app:srcCompat="@drawable/signupimage" />
 
     <EditText
         android:id="@+id/usernameField2"
         android:layout_width="280dp"
         android:layout_height="52dp"
-        android:layout_marginTop="424dp"
+        android:layout_marginTop="448dp"
         android:ems="10"
         android:hint="@string/enter_a_username"
         android:importantForAutofill="no"
@@ -80,9 +91,10 @@
         android:textColor="@android:color/darker_gray"
         android:textColorHint="#A1887F"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.687"
+        app:layout_constraintHorizontal_bias="0.672"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView8" />
+        app:layout_constraintTop_toTopOf="@+id/imageView8"
+        app:startIconDrawable="@drawable/noun_email" />
 
     <EditText
         android:id="@+id/surnameField"
@@ -122,7 +134,7 @@
         android:layout_width="253dp"
         android:layout_height="57dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="29dp"
         android:ems="10"
         android:hint="@string/select_birthdate"
         android:importantForAutofill="no"
@@ -130,7 +142,7 @@
         android:textColor="@android:color/darker_gray"
         android:textColorHint="#A1887F"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.019"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/calendarImage"
         app:layout_constraintTop_toBottomOf="@+id/surnameField" />
 
@@ -139,7 +151,7 @@
         android:layout_width="58dp"
         android:layout_height="62dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="28dp"
         android:contentDescription="@string/todo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/surnameField"
@@ -158,20 +170,9 @@
         android:hint="@string/gender"
         android:spinnerMode="dialog"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.189"
+        app:layout_constraintHorizontal_bias="0.204"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateField" />
-
-    <ImageView
-        android:id="@+id/registrationButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordField2"
-        app:srcCompat="@drawable/signupimage" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -191,7 +192,7 @@
         android:id="@+id/imageView9"
         android:layout_width="59dp"
         android:layout_height="46dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@+id/passwordField2"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

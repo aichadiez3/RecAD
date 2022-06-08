@@ -69,4 +69,18 @@
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/logoutimage" />
 
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="88dp"
+        android:layout_marginBottom="68dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/welcomeView"
+        app:layout_constraintEnd_toEndOf="@+id/logoutButton"
+        app:layout_constraintHorizontal_bias="0.791"
+        app:layout_constraintStart_toStartOf="@+id/welcomeView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

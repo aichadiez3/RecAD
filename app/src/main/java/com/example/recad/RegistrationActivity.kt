@@ -17,9 +17,12 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class RegistrationActivity : AppCompatActivity() {
+
+    private val database = FirebaseFirestore.getInstance()
 
     private lateinit var detector: GestureDetectorCompat
     private var frag: Fragment? = null
@@ -78,7 +81,6 @@ class RegistrationActivity : AppCompatActivity() {
 
         }
         editDate = findViewById(R.id.dateField)
-
         displayCalendar = findViewById(R.id.calendarImage)
         displayCalendar.setOnClickListener{
             showDatePickerDialog()
@@ -103,16 +105,35 @@ class RegistrationActivity : AppCompatActivity() {
             signInButton.isEnabled = isValid
         }
 
+
         signInButton.setOnClickListener {
+
+            var username = usernameField.text.toString()
+            var password = passwordField.text.toString()
+            var name = findViewById<EditText>(R.id.nameField).text.toString()
+            var surname = findViewById<EditText>(R.id.surnameField).text.toString()
+            var date = findViewById<EditText>(R.id.dateField).text.toString()
+            var gender = spinner.selectedItem.toString()
+
             // Once we check the parameters of the new user are correct, we create it into Firebase
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(usernameField.text.toString(),
-                passwordField.text.toString()).addOnCompleteListener(this, OnCompleteListener { task ->
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(username, password).addOnCompleteListener(this, OnCompleteListener { task ->
 
                 val user = FirebaseAuth.getInstance().currentUser // check if user is logged in firebase android and then load another activity
 
         //notifies if the user has been created correctly
                     if(task.isSuccessful){
                         if (user != null) {
+
+                            // Here we save data of the registration into DB
+                            database.collection("users").document(username).set(       // we create a single document for each user (easy to access)
+                                hashMapOf("name" to name,
+                                "surname" to surname,
+                                "date of birth" to date,
+                                "gender" to gender)
+                            )
+                            val intent = Intent(this@RegistrationActivity, HomeActivity::class.java)
+                            intent.putExtra("username", username)
+                            intent.putExtra("name", name)
                             showWelcome(user)
                         }
                         Toast.makeText(this, "Successfully created account", Toast.LENGTH_SHORT).show()

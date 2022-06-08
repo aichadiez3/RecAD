@@ -53,14 +53,12 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
     private val isValidLiveData = MediatorLiveData<Boolean>().apply {
         this.value=false
 
-        addSource(emailLiveData) { email ->
-            // Monitors changes in email block
+        addSource(emailLiveData) { email ->// Monitors changes in email block
             val passw = passwordLiveData.value
             this.value = validateForm(email, passw)
         }
 
         addSource(passwordLiveData) { passw ->
-            // Monitors changes in email block
             val email = emailLiveData.value
             this.value = validateForm(email, passw)
         }
@@ -91,7 +89,6 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
         changePass = findViewById(R.id.resetPasswordButton)
         changePass.setOnClickListener{
-            //Toast.makeText(this@MainActivity, "Change password unavailable", Toast.LENGTH_LONG).show()
             val auth = FirebaseAuth.getInstance()
             val emailAddress = usernameField.text.toString()
             auth.sendPasswordResetEmail(emailAddress).addOnCompleteListener { task ->

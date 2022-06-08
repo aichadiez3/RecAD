@@ -14,7 +14,9 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 
 class RegistrationActivity : AppCompatActivity() {
@@ -104,17 +106,20 @@ class RegistrationActivity : AppCompatActivity() {
         signInButton.setOnClickListener {
             // Once we check the parameters of the new user are correct, we create it into Firebase
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(usernameField.text.toString(),
-                passwordField.text.toString()).addOnCompleteListener {
-                //notifies if the user has been created correctly
+                passwordField.text.toString()).addOnCompleteListener(this, OnCompleteListener { task ->
+
                 val user = FirebaseAuth.getInstance().currentUser // check if user is logged in firebase android and then load another activity
 
-                    if(it.isSuccessful || user != null){
-                        showWelcome()
+        //notifies if the user has been created correctly
+                    if(task.isSuccessful){
+                        if (user != null) {
+                            showWelcome(user)
+                        }
                         Toast.makeText(this, "Successfully created account", Toast.LENGTH_SHORT).show()
                     } else {
                         showAlert()
                     }
-            }
+            })
 
         }
 
@@ -131,7 +136,7 @@ class RegistrationActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showWelcome(){
+    private fun showWelcome(user: FirebaseUser){
         frag = supportFragmentManager.findFragmentById(R.id.container)
         if (frag == null) {
             supportFragmentManager.beginTransaction().add(R.id.container, WelcomeFragment()).commit()

@@ -139,6 +139,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
                         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
                             if(it.isSuccessful){
                                 showHome(account.email ?: "", ProviderType.GOOGLE)
+                                session()
                             } else {
                                 showAlert()
                             }
@@ -154,10 +155,11 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
         loginButton.setOnClickListener {
             setup()
+            session()
         }
 
         // Check if it already exist a current session for the email introduced
-        session()
+
 
 
 

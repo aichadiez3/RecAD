@@ -10,37 +10,19 @@
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="393dp"
-        android:layout_height="772dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="391dp"
+        android:layout_height="797dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/round_rectangle" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="222dp"
-        android:layout_height="39dp"
-        android:gravity="center"
-        android:text="@string/account_creation"
-        android:textAllCaps="true"
-        android:textColor="#807979"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/usernameField2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.789"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView8"
-        app:layout_constraintVertical_bias="0.963" />
 
     <EditText
         android:id="@+id/nameField"
         android:layout_width="319dp"
         android:layout_height="49dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="144dp"
         android:ems="10"
         android:hint="@string/name"
         android:importantForAutofill="no"
@@ -48,69 +30,9 @@
         android:textColor="@android:color/darker_gray"
         android:textColorHint="#A1887F"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView8" />
-
-    <EditText
-        android:id="@+id/passwordField2"
-        android:layout_width="281dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:hint="@string/enter_a_password"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        android:textColor="@android:color/darker_gray"
-        android:textColorHint="#A1887F"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.678"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameField2" />
-
-    <ImageView
-        android:id="@+id/registrationButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordField2"
-        app:srcCompat="@drawable/signupimage" />
-
-    <EditText
-        android:id="@+id/usernameField2"
-        android:layout_width="280dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="448dp"
-        android:ems="10"
-        android:hint="@string/enter_a_username"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:textColor="@android:color/darker_gray"
-        android:textColorHint="#A1887F"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.672"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView8"
-        app:startIconDrawable="@drawable/noun_email" />
-
-    <EditText
-        android:id="@+id/surnameField"
-        android:layout_width="320dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/surname"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:textColor="@android:color/darker_gray"
-        android:textColorHint="#A1887F"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameField" />
 
     <TextView
         android:id="@+id/textView"
@@ -124,17 +46,33 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/nameField"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.308"
+        app:layout_constraintHorizontal_bias="0.718"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView8"
-        app:layout_constraintVertical_bias="0.796" />
+        app:layout_constraintVertical_bias="0.971" />
+
+    <EditText
+        android:id="@+id/surnameField"
+        android:layout_width="320dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="@string/surname"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameField" />
 
     <EditText
         android:id="@+id/dateField"
         android:layout_width="253dp"
         android:layout_height="57dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/select_birthdate"
         android:importantForAutofill="no"
@@ -151,7 +89,7 @@
         android:layout_width="58dp"
         android:layout_height="62dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:contentDescription="@string/todo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/surnameField"
@@ -175,6 +113,34 @@
         app:layout_constraintTop_toBottomOf="@+id/dateField" />
 
     <ImageView
+        android:id="@+id/registrationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordField2"
+        app:srcCompat="@drawable/signupimage" />
+
+    <EditText
+        android:id="@+id/usernameField2"
+        android:layout_width="280dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="468dp"
+        android:ems="10"
+        android:hint="@string/enter_a_username"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.672"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView8"
+        app:startIconDrawable="@drawable/noun_email" />
+
+    <ImageView
         android:id="@+id/imageView7"
         android:layout_width="52dp"
         android:layout_height="47dp"
@@ -182,21 +148,65 @@
         android:layout_marginTop="12dp"
         app:layout_constraintBottom_toTopOf="@+id/passwordField2"
         app:layout_constraintEnd_toStartOf="@+id/usernameField2"
-        app:layout_constraintHorizontal_bias="0.789"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.473"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/noun_email" />
 
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="59dp"
         android:layout_height="46dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         app:layout_constraintEnd_toStartOf="@+id/passwordField2"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7"
         app:srcCompat="@drawable/noun_password" />
+
+    <EditText
+        android:id="@+id/passwordField2"
+        android:layout_width="281dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/enter_a_password"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="#A1887F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.678"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameField2" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="222dp"
+        android:layout_height="39dp"
+        android:gravity="center"
+        android:text="@string/account_creation"
+        android:textAllCaps="true"
+        android:textColor="#807979"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/usernameField2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.789"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView8"
+        app:layout_constraintVertical_bias="0.983" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="161dp"
+        android:layout_height="52dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.656"
+        app:srcCompat="@drawable/noun_swipe_down" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

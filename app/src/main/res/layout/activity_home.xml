@@ -57,4 +57,16 @@
         app:layout_constraintVertical_bias="0.693"
         app:srcCompat="@drawable/records" />
 
+    <ImageView
+        android:id="@+id/logoutButton"
+        android:layout_width="96dp"
+        android:layout_height="81dp"
+        app:layout_constraintBottom_toBottomOf="@+id/welcomeView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.72"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/welcomeView"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/logoutimage" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

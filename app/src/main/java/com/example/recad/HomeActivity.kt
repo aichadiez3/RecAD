@@ -2,16 +2,17 @@ package com.example.recad
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var settings: ImageView
     private lateinit var voice: ImageView
     private lateinit var records: ImageView
+    private lateinit var logout: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,13 @@ class HomeActivity : AppCompatActivity() {
         records.setOnClickListener {
             //startActivity(Intent(this, VoiceMenuActivity::class.java))
             Toast.makeText(this, "Records is unavailable", Toast.LENGTH_LONG).show()
+        }
+
+        logout.findViewById<ImageView>(R.id.loginButton)
+        logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            onBackPressed()
+            startActivity(Intent(this, MainActivity::class.java))
         }
 
     }

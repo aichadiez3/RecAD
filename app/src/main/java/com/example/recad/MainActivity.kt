@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.isVisible
@@ -15,13 +16,21 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity(), FragmentNavigation {
+
+    //Intance that calls to database in Firebase
+    private val database = FirebaseFirestore.getInstance()
 
     private lateinit var detector: GestureDetectorCompat
     private lateinit var loginButton: ImageView
     private lateinit var registerAccount: ImageView
     private lateinit var changePass: TextView
+    private lateinit var usernameField: EditText
+    private lateinit var passwordField: EditText
     private var touch: Int = 0
 
     private val emailLiveData = MutableLiveData<String>()
@@ -49,6 +58,12 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Analytics Event
+        val analytics = FirebaseAnalytics.getInstance(this)
+        val bundle = Bundle()
+        bundle.putString("message","Firebase integration completed")
+        analytics.logEvent("InitScreen", bundle)
+
 
 
         detector = GestureDetectorCompat(this, DiaryGestureListener())
@@ -66,8 +81,8 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
         }
 
-        val usernameField = findViewById<EditText>(R.id.usernameField)
-        val passwordField = findViewById<EditText>(R.id.passwordField)
+        usernameField = findViewById(R.id.usernameField)
+        passwordField = findViewById(R.id.passwordField)
         loginButton = findViewById(R.id.loginButton)
 
         usernameField.doOnTextChanged { text, _, _, _ ->
@@ -85,11 +100,35 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
 
         loginButton.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
+
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(usernameField.text.toString(),
+                passwordField.text.toString()).addOnCompleteListener(){
+                //notifies if the user has been created correctly
+                if(it.isSuccessful){
+                    showHome()
+                } else {
+                    showAlert()
+                }
+            }
+
+
         }
 
-
     }
+
+    private fun showAlert(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage("An error has occurred while authentication of the user")
+        builder.setPositiveButton("Ok", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun showHome(){
+        startActivity(Intent(this, HomeActivity::class.java))
+    }
+
 
     private fun validateForm(email: String?, password:String?) : Boolean {
         val isValidEmail = email != null && email.isNotBlank() && email.contains("@")
@@ -100,7 +139,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return if(detector.onTouchEvent(event)){
+        return if(event?.let { detector.onTouchEvent(it) } == true){
             true
         } else {
             super.onTouchEvent(event)

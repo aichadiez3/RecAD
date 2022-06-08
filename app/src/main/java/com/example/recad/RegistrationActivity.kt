@@ -6,6 +6,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.isVisible
@@ -13,6 +14,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
 
 class RegistrationActivity : AppCompatActivity() {
 
@@ -49,13 +51,7 @@ class RegistrationActivity : AppCompatActivity() {
 
         detector = GestureDetectorCompat(this, DiaryGestureListener())
 
-        signInButton = findViewById(R.id.registrationButton)
-        signInButton.setOnClickListener {
-            frag = supportFragmentManager.findFragmentById(R.id.container)
-            if (frag == null) {
-                supportFragmentManager.beginTransaction().add(R.id.container, WelcomeFragment()).commit()
-            }
-        }
+
 
         val spinner = findViewById<Spinner>(R.id.spinner)
 
@@ -97,13 +93,49 @@ class RegistrationActivity : AppCompatActivity() {
             passwordLiveData.value = text?.toString()
         }
 
+        signInButton = findViewById(R.id.registrationButton)
+
         isValidLiveData.observe(this) { isValid ->
             signInButton.isVisible = isValid
             signInButton.isEnabled = isValid
         }
 
+        signInButton.setOnClickListener {
+
+
+            // Once we check the parameters of the new user are correct, we create it into Firebase
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(usernameField.text.toString(),
+                passwordField.text.toString()).addOnCompleteListener(){
+                //notifies if the user has been created correctly
+                    if(it.isSuccessful){
+                        showWelcome()
+                    } else {
+                        showAlert()
+                    }
+            }
+
+        }
+
 
     }
+
+
+    private fun showAlert(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage("An error has occurred while authentication of the user")
+        builder.setPositiveButton("Ok", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun showWelcome(){
+        frag = supportFragmentManager.findFragmentById(R.id.container)
+        if (frag == null) {
+            supportFragmentManager.beginTransaction().add(R.id.container, WelcomeFragment()).commit()
+        }
+    }
+
 
     private fun showDatePickerDialog(){
         val datePicker = CalendarFragment { day, month, year -> onDateSelected(day, month, year) }
@@ -122,7 +154,7 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return if(detector.onTouchEvent(event)){
+        return if(event?.let { detector.onTouchEvent(it) } == true){
             true
         } else {
             super.onTouchEvent(event)

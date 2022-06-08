@@ -16,18 +16,19 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 
+
 class RegistrationActivity : AppCompatActivity() {
 
     private lateinit var detector: GestureDetectorCompat
+    private var frag: Fragment? = null
 
     private lateinit var signInButton: ImageView
     private lateinit var displayCalendar: ImageView
     private lateinit var editDate : EditText
-
-    private var frag: Fragment? = null
-
     private val emailLiveData = MutableLiveData<String>()
     private val passwordLiveData = MutableLiveData<String>()
+    private lateinit var usernameField: EditText
+    private lateinit var passwordField: EditText
 
     private val isValidLiveData = MediatorLiveData<Boolean>().apply {
         this.value=false
@@ -82,16 +83,16 @@ class RegistrationActivity : AppCompatActivity() {
         }
 
 
-        val usernameField = findViewById<EditText>(R.id.usernameField2)
-        val passwordField = findViewById<EditText>(R.id.passwordField2)
+        usernameField = findViewById(R.id.usernameField2)
+        passwordField = findViewById(R.id.passwordField2)
 
-        usernameField.doOnTextChanged { text, _, _, _ ->
-            emailLiveData.value = text?.toString()
-        }
+            usernameField.doOnTextChanged { text, _, _, _ ->
+                emailLiveData.value = text?.toString()
+            }
 
-        passwordField.doOnTextChanged { text, _, _, _ ->
-            passwordLiveData.value = text?.toString()
-        }
+            passwordField.doOnTextChanged { text, _, _, _ ->
+                passwordLiveData.value = text?.toString()
+            }
 
         signInButton = findViewById(R.id.registrationButton)
 
@@ -101,14 +102,15 @@ class RegistrationActivity : AppCompatActivity() {
         }
 
         signInButton.setOnClickListener {
-
-
             // Once we check the parameters of the new user are correct, we create it into Firebase
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(usernameField.text.toString(),
-                passwordField.text.toString()).addOnCompleteListener(){
+                passwordField.text.toString()).addOnCompleteListener {
                 //notifies if the user has been created correctly
-                    if(it.isSuccessful){
+                val user = FirebaseAuth.getInstance().currentUser // check if user is logged in firebase android and then load another activity
+
+                    if(it.isSuccessful || user != null){
                         showWelcome()
+                        Toast.makeText(this, "Successfully created account", Toast.LENGTH_SHORT).show()
                     } else {
                         showAlert()
                     }
@@ -123,7 +125,7 @@ class RegistrationActivity : AppCompatActivity() {
     private fun showAlert(){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("An error has occurred while authentication of the user")
+        builder.setMessage("An error has occurred while creating the user")
         builder.setPositiveButton("Ok", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()

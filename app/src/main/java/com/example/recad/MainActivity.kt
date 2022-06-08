@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         loginButton.setOnClickListener {
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(usernameField.text.toString(),
-                passwordField.text.toString()).addOnCompleteListener(){
+                passwordField.text.toString()).addOnCompleteListener {
                 //notifies if the user has been created correctly
                 if(it.isSuccessful){
                     showHome()

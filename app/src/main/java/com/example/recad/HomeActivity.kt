@@ -26,13 +26,11 @@ class HomeActivity : AppCompatActivity() {
 
         settings = findViewById(R.id.settingsButton)
         settings.setOnClickListener {
-            //startActivity(Intent(this, VoiceMenuActivity::class.java))
             Toast.makeText(this, "Settings is unavailable", Toast.LENGTH_LONG).show()
         }
 
         records = findViewById(R.id.recordsButton)
         records.setOnClickListener {
-            //startActivity(Intent(this, VoiceMenuActivity::class.java))
             Toast.makeText(this, "Records is unavailable", Toast.LENGTH_LONG).show()
         }
 

@@ -116,7 +116,7 @@
         android:id="@+id/googleIcon"
         android:layout_width="83dp"
         android:layout_height="77dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="13dp"
         android:clickable="true"
         android:contentDescription="@string/google_login"
         app:layout_constraintBottom_toTopOf="@+id/createAccount"

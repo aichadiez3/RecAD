@@ -8,4 +8,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background">#F3DFEB</color>
     <color name="text_hint">#A1887F</color>
+    <color name="pink_main">#DA64AE</color>
+
 </resources>

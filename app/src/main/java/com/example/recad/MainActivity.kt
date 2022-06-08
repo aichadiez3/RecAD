@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 
+
 enum class ProviderType {
     BASIC, GOOGLE
 }
@@ -90,13 +91,21 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
         changePass = findViewById(R.id.resetPasswordButton)
         changePass.setOnClickListener{
-            Toast.makeText(this@MainActivity, "Change password unavailable", Toast.LENGTH_LONG).show()
+            //Toast.makeText(this@MainActivity, "Change password unavailable", Toast.LENGTH_LONG).show()
+            val auth = FirebaseAuth.getInstance()
+            val emailAddress = usernameField.text.toString()
+            auth.sendPasswordResetEmail(emailAddress).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this@MainActivity, "Email sent to account", Toast.LENGTH_SHORT).show()
+                    }
+                }
 
         }
 
         usernameField = findViewById(R.id.usernameField)
         passwordField = findViewById(R.id.passwordField)
 
+        // Initialize the buttons
         loginButton = findViewById(R.id.loginButton)
         googleIcon = findViewById(R.id.googleIcon)
 
@@ -122,13 +131,14 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
             .build()
 
         val googleClient = GoogleSignIn.getClient(this, googleConf)
+        val signInIntent = googleClient.signInIntent
         googleClient.signOut()
         //startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN) // this line is deprecated ------------> OLD
 
         /** SOLUTION TO DEPRECATION **/
         val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(googleClient.signInIntent)
+                val task = GoogleSignIn.getSignedInAccountFromIntent(signInIntent)
 
                 try {
                     val account = task.getResult(ApiException::class.java)
@@ -155,11 +165,13 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
         loginButton.setOnClickListener {
             setup()
-            session()
+            session() // Check if it already exist a current session for the email introduced
         }
 
-        // Check if it already exist a current session for the email introduced
 
+        googleIcon.setOnClickListener {
+            launcher.launch(signInIntent)
+        }
 
 
 

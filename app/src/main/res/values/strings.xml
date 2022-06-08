@@ -9,6 +9,8 @@
     <string name="sign_up">Sign up</string>
     <string name="name">Name</string>
     <string name="enter_a_password">Enter a password</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="confirm_password">Confirm password</string>
     <string name="surname">Surname</string>
     <string name="enter_a_username">Enter a username</string>
     <string name="patient_information">Patient Information</string>

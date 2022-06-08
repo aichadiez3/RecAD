@@ -1,5 +1,6 @@
 package com.example.recad
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
@@ -32,7 +34,7 @@ enum class ProviderType {
 
 class MainActivity : AppCompatActivity(), FragmentNavigation {
 
-    //Intance that calls to database in Firebase
+    //Instance that calls to database in Firebase
     private val database = FirebaseFirestore.getInstance()
 
     private lateinit var detector: GestureDetectorCompat
@@ -43,7 +45,6 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
     private lateinit var usernameField: EditText
     private lateinit var passwordField: EditText
     private var touch: Int = 0
-    private val GOOGLE_SIGN_IN: Int = 100
 
     private val emailLiveData = MutableLiveData<String>()
     private val passwordLiveData = MutableLiveData<String>()
@@ -113,73 +114,69 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         }
 
 
-        var click: Boolean = false
-        googleIcon.setOnClickListener {
-            click = true
-        }
 
-        if(click){
-            setup(usernameField.text.toString(), ProviderType.GOOGLE)
-        } else {
-            setup(usernameField.text.toString(), ProviderType.BASIC)
-        }
+        // Google signin configuration
+        val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
 
-        // Check if it already exist a current session for the email introduced
-        session()
+        val googleClient = GoogleSignIn.getClient(this, googleConf)
+        googleClient.signOut()
+        //startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN) // this line is deprecated ------------> OLD
 
-        /*
-    // Guardado de datos
-        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit() // Es un fichero compartido de preferencias del tipo clave-valor compartido en toda nuestra app
-        val bundle2 = intent.extras
-        val email = bundle2?.getString("email")
-        val provider = bundle2?.getString("provider")
-        setup(email ?: "", provider ?: "")
-        prefs.putString("email", email.toString())
-        prefs.putString("provider", provider.toString())
-        prefs.apply()
+        /** SOLUTION TO DEPRECATION **/
+        val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(googleClient.signInIntent)
 
-         */
+                try {
+                    val account = task.getResult(ApiException::class.java)
 
-    }
+                    if(account != null){
+                        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
 
-    @Suppress("DEPRECATION")
-    private fun setup(email: String, provider: ProviderType){
-        loginButton.setOnClickListener {
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(email,
-                passwordField.text.toString()).addOnCompleteListener {
-                //notifies if the user has been created correctly
-                if(it.isSuccessful){
-                    showHome(it.result?.user?.email ?: "", provider)
-                } else {
+                        FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
+                            if(it.isSuccessful){
+                                showHome(account.email ?: "", ProviderType.GOOGLE)
+                            } else {
+                                showAlert()
+                            }
+                        }
+
+                    }
+                } catch(e: ApiException){
                     showAlert()
                 }
             }
         }
 
 
-        googleIcon.setOnClickListener {
+        loginButton.setOnClickListener {
+            setup()
+        }
 
-            // Google signin configuration
-            val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
+        // Check if it already exist a current session for the email introduced
+        session()
 
-            val googleClient = GoogleSignIn.getClient(this, googleConf)
-            googleClient.signOut()
-            startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
 
+
+    }
+
+    private fun setup(){
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(usernameField.text.toString(),
+            passwordField.text.toString()).addOnCompleteListener {
+            //notifies if the user has been created correctly
+            if(it.isSuccessful){
+                showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
+            } else {
+                showAlert()
+            }
         }
 
     }
-/*
-    override fun onStart(){
-        super.onStart()
-        backimage.visibility = View.VISIBLE
-    }
 
- */
-
+    /*                          // OLD VERSION
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -208,6 +205,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         }
 
     }
+     */
 
 
     private fun session(){

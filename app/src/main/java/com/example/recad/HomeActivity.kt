@@ -1,5 +1,6 @@
 package com.example.recad
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
@@ -36,7 +37,14 @@ class HomeActivity : AppCompatActivity() {
         }
 
         logout.findViewById<ImageView>(R.id.loginButton)
+
         logout.setOnClickListener {
+
+            // Borrado de datos
+            val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+            prefs.clear()
+            prefs.apply()
+
             FirebaseAuth.getInstance().signOut()
             onBackPressed()
             startActivity(Intent(this, MainActivity::class.java))

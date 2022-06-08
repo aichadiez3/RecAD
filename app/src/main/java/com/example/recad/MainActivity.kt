@@ -1,5 +1,6 @@
 package com.example.recad
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.GestureDetector
@@ -16,9 +17,18 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+
+enum class ProviderType {
+    BASIC, GOOGLE
+}
+
 
 class MainActivity : AppCompatActivity(), FragmentNavigation {
 
@@ -27,11 +37,13 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     private lateinit var detector: GestureDetectorCompat
     private lateinit var loginButton: ImageView
+    private lateinit var googleIcon: ImageView
     private lateinit var registerAccount: ImageView
     private lateinit var changePass: TextView
     private lateinit var usernameField: EditText
     private lateinit var passwordField: EditText
     private var touch: Int = 0
+    private val GOOGLE_SIGN_IN: Int = 100
 
     private val emailLiveData = MutableLiveData<String>()
     private val passwordLiveData = MutableLiveData<String>()
@@ -64,7 +76,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         bundle.putString("message","Firebase integration completed")
         analytics.logEvent("InitScreen", bundle)
 
-
+        //onStart()
 
         detector = GestureDetectorCompat(this, DiaryGestureListener())
 
@@ -83,7 +95,9 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
         usernameField = findViewById(R.id.usernameField)
         passwordField = findViewById(R.id.passwordField)
+
         loginButton = findViewById(R.id.loginButton)
+        googleIcon = findViewById(R.id.googleIcon)
 
         usernameField.doOnTextChanged { text, _, _, _ ->
             emailLiveData.value = text?.toString()
@@ -99,22 +113,114 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         }
 
 
-        loginButton.setOnClickListener {
+        var click: Boolean = false
+        googleIcon.setOnClickListener {
+            click = true
+        }
 
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(usernameField.text.toString(),
+        if(click){
+            setup(usernameField.text.toString(), ProviderType.GOOGLE)
+        } else {
+            setup(usernameField.text.toString(), ProviderType.BASIC)
+        }
+
+        // Check if it already exist a current session for the email introduced
+        session()
+
+        /*
+    // Guardado de datos
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit() // Es un fichero compartido de preferencias del tipo clave-valor compartido en toda nuestra app
+        val bundle2 = intent.extras
+        val email = bundle2?.getString("email")
+        val provider = bundle2?.getString("provider")
+        setup(email ?: "", provider ?: "")
+        prefs.putString("email", email.toString())
+        prefs.putString("provider", provider.toString())
+        prefs.apply()
+
+         */
+
+    }
+
+    @Suppress("DEPRECATION")
+    private fun setup(email: String, provider: ProviderType){
+        loginButton.setOnClickListener {
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email,
                 passwordField.text.toString()).addOnCompleteListener {
                 //notifies if the user has been created correctly
                 if(it.isSuccessful){
-                    showHome()
+                    showHome(it.result?.user?.email ?: "", provider)
                 } else {
                     showAlert()
                 }
             }
+        }
 
+
+        googleIcon.setOnClickListener {
+
+            // Google signin configuration
+            val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+
+            val googleClient = GoogleSignIn.getClient(this, googleConf)
+            googleClient.signOut()
+            startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
 
         }
 
     }
+/*
+    override fun onStart(){
+        super.onStart()
+        backimage.visibility = View.VISIBLE
+    }
+
+ */
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == GOOGLE_SIGN_IN){
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+
+            try {
+                val account = task.getResult(ApiException::class.java)
+
+                if(account != null){
+                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+
+                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
+                        if(it.isSuccessful){
+                            showHome(account.email ?: "", ProviderType.GOOGLE)
+                        } else {
+                            showAlert()
+                        }
+                    }
+
+                }
+            } catch(e: ApiException){
+                showAlert()
+            }
+
+        }
+
+    }
+
+
+    private fun session(){
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE) // We are going to get data
+        val email = prefs.getString("email", null)
+        val provider = prefs.getString("provider", null)
+
+        if(email != null && provider != null){
+            //backimage.vibility = View.INVISIBLE
+            showHome(email, ProviderType.valueOf(provider))
+        }
+    }
+
 
     private fun showAlert(){
         val builder = AlertDialog.Builder(this)
@@ -125,8 +231,14 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         dialog.show()
     }
 
-    private fun showHome(){
-        startActivity(Intent(this, HomeActivity::class.java))
+    private fun showHome(email: String, provider: ProviderType){
+        val homeIntent = Intent(this, HomeActivity::class.java).apply {
+            putExtra("email", email)
+            putExtra("provider", provider.name)
+        }
+        startActivity(homeIntent)
+
+
     }
 
 

@@ -16,7 +16,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -131,10 +130,12 @@ class RegistrationActivity : AppCompatActivity() {
                                 "date of birth" to date,
                                 "gender" to gender)
                             )
-                            val intent = Intent(this@RegistrationActivity, HomeActivity::class.java)
-                            intent.putExtra("username", username)
-                            intent.putExtra("name", name)
-                            showWelcome(user)
+                            Intent(this@RegistrationActivity, HomeActivity::class.java).apply {
+                                putExtra("email", user.email.toString())
+                                putExtra("password", password)
+                                putExtra("name", name)
+                            }
+                            showWelcome()
                         }
                         Toast.makeText(this, "Successfully created account", Toast.LENGTH_SHORT).show()
                     } else {
@@ -157,7 +158,7 @@ class RegistrationActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showWelcome(user: FirebaseUser){
+    private fun showWelcome(){
         frag = supportFragmentManager.findFragmentById(R.id.container)
         if (frag == null) {
             supportFragmentManager.beginTransaction().add(R.id.container, WelcomeFragment()).commit()

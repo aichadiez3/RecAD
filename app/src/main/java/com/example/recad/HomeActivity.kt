@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+
 class HomeActivity : AppCompatActivity() {
+
     private val database = FirebaseFirestore.getInstance()
 
     private lateinit var settings: ImageView
@@ -23,16 +26,20 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+
         nameField = findViewById(R.id.nameText)
 
        //Get the information from the user from DB
 
-        val name = intent.getStringExtra("name")
-        val username = intent.getStringExtra("username")
+        val name = intent.getStringExtra("name").toString()
+        val username = intent.getStringExtra("email").toString()
+        val password = intent.getStringExtra("password").toString()
+
+
         if (username != null) {
             database.collection("users").document(username).get().addOnSuccessListener {
-                //nameField.text = it.get("name") as String?
-                nameField.text = name
+                nameField.text = it.get("name") as String?
+                //nameField.text = name
             }
         }
 
@@ -44,12 +51,13 @@ class HomeActivity : AppCompatActivity() {
 
         settings = findViewById(R.id.settingsButton)
         settings.setOnClickListener {
-            Toast.makeText(this, "Settings is unavailable", Toast.LENGTH_LONG).show()
+            showAlert(username, password)
+            //Toast.makeText(this, "Settings is unavailable", Toast.LENGTH_SHORT).show()
         }
 
         records = findViewById(R.id.recordsButton)
         records.setOnClickListener {
-            Toast.makeText(this, "Records is unavailable", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Records is unavailable", Toast.LENGTH_SHORT).show()
         }
 
         logout = findViewById(R.id.logoutButton)
@@ -82,6 +90,34 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
+    private fun showAlert(username: String, password: String){
+        val builder = AlertDialog.Builder(this@HomeActivity)
+        builder.setTitle("Delete account")
+        builder.setMessage("We are sorry to see you go. Are you sure you want to delete your account?")
+            .setCancelable(false)
+            .setPositiveButton("Delete"){ dialog, id ->
+
+                val user = FirebaseAuth.getInstance().currentUser
+
+                if (user != null) {
+                    database.collection("users").document(user.email.toString()).delete() // delete the collection associated to the registered email
+
+                    user.delete().addOnCompleteListener {
+                    Toast.makeText(this, "Account successfully deleted .", Toast.LENGTH_SHORT).show()
+                    finish()
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
+            }
+
+
+            }
+            .setNegativeButton("No") { dialog, id ->
+                dialog.dismiss()
+            }
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+
+    }
 
 
 }

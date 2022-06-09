@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     //Instance that calls to database in Firebase
     private val database = FirebaseFirestore.getInstance()
-    //lateinit var googleClient: GoogleSignInClient
 
     private lateinit var detector: GestureDetectorCompat
     private lateinit var loginButton: ImageView
@@ -77,8 +76,6 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         bundle.putString("message","Firebase integration completed")
         analytics.logEvent("InitScreen", bundle)
 
-        //onStart()
-
         detector = GestureDetectorCompat(this, DiaryGestureListener())
 
 
@@ -94,7 +91,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
             val emailAddress = usernameField.text.toString()
             auth.sendPasswordResetEmail(emailAddress).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(this@MainActivity, "Email sent to account", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Email sent to account $emailAddress", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -129,9 +126,8 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
             .build()
 
         val googleClient = GoogleSignIn.getClient(this, googleConf)
-        val signInIntent = googleClient.signInIntent
         googleClient.signOut()
-        //startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN) // this line is deprecated ------------> OLD
+
 
         /** SOLUTION TO DEPRECATION **/
         val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
@@ -147,10 +143,9 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
                         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
                             if(it.isSuccessful){
-                                showHome(account.email ?: "", ProviderType.GOOGLE)
+                                showHome(account.email ?: "")
                                 session()
                             } else {
-
                                 showAlert()
                             }
                         }
@@ -182,7 +177,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
             passwordField.text.toString()).addOnCompleteListener {
             //notifies if the user has been created correctly
             if(it.isSuccessful){
-                showHome(it.result?.user?.email ?: "", ProviderType.BASIC)
+                showHome(it.result?.user?.email ?: "")
             } else {
                 showAlert()
             }
@@ -190,46 +185,14 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     }
 
-    /*                          // OLD VERSION
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode == GOOGLE_SIGN_IN){
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-
-            try {
-                val account = task.getResult(ApiException::class.java)
-
-                if(account != null){
-                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-
-                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
-                        if(it.isSuccessful){
-                            showHome(account.email ?: "", ProviderType.GOOGLE)
-                        } else {
-                            showAlert()
-                        }
-                    }
-
-                }
-            } catch(e: ApiException){
-                showAlert()
-            }
-
-        }
-
-    }
-     */
 
 
     private fun session(){
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE) // We are going to get data
         val email = prefs.getString("email", null)
-        val provider = prefs.getString("provider", null)
 
-        if(email != null && provider != null){
-            //backimage.vibility = View.INVISIBLE
-            showHome(email, ProviderType.valueOf(provider))
+        if(email != null){
+            showHome(email)
         }
     }
 
@@ -243,10 +206,14 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         dialog.show()
     }
 
-    private fun showHome(email: String, provider: ProviderType){
+    private fun showHome(email: String){
+
+        database.collection("users").document(email).get().addOnSuccessListener {
+
+        }
+
         val homeIntent = Intent(this, HomeActivity::class.java).apply {
             putExtra("email", email)
-            putExtra("provider", provider.name)
         }
         startActivity(homeIntent)
 

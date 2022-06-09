@@ -161,6 +161,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         loginButton.setOnClickListener {
             setup()
             session() // Check if it already exist a current session for the email introduced
+
         }
 
 
@@ -171,6 +172,8 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
 
     }
+
+
 
     private fun setup(){
         FirebaseAuth.getInstance().signInWithEmailAndPassword(usernameField.text.toString(),
@@ -209,14 +212,11 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
     private fun showHome(email: String){
 
         database.collection("users").document(email).get().addOnSuccessListener {
-
+            val homeIntent = Intent(this, HomeActivity::class.java).apply {
+                putExtra("email", email)
+            }
+            startActivity(homeIntent)
         }
-
-        val homeIntent = Intent(this, HomeActivity::class.java).apply {
-            putExtra("email", email)
-        }
-        startActivity(homeIntent)
-
 
     }
 

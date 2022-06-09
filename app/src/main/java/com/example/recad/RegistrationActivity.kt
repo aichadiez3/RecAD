@@ -114,13 +114,14 @@ class RegistrationActivity : AppCompatActivity() {
             var date = findViewById<EditText>(R.id.dateField).text.toString()
             var gender = spinner.selectedItem.toString()
 
-            // Once we check the parameters of the new user are correct, we create it into Firebase
+
+            // When parameters of the new user are correct, we create it into Firebase
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(username, password).addOnCompleteListener(this, OnCompleteListener { task ->
 
                 val user = FirebaseAuth.getInstance().currentUser // check if user is logged in firebase android and then load another activity
 
-        //notifies if the user has been created correctly
-                    if(task.isSuccessful){
+
+                    if(task.isSuccessful){      //notifies if the user has been created correctly
                         if (user != null) {
 
                             // Here we save data of the registration into DB
@@ -130,11 +131,13 @@ class RegistrationActivity : AppCompatActivity() {
                                 "date of birth" to date,
                                 "gender" to gender)
                             )
+
                             Intent(this@RegistrationActivity, HomeActivity::class.java).apply {
-                                putExtra("email", user.email.toString())
-                                putExtra("password", password)
                                 putExtra("name", name)
+                            /*    putExtra("email", user.email.toString())*/
                             }
+
+
                             showWelcome()
                         }
                         Toast.makeText(this, "Successfully created account", Toast.LENGTH_SHORT).show()

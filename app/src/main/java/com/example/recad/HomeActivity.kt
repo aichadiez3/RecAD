@@ -31,17 +31,19 @@ class HomeActivity : AppCompatActivity() {
 
        //Get the information from the user from DB
 
-        val name = intent.getStringExtra("name").toString()
         val username = intent.getStringExtra("email").toString()
-        val password = intent.getStringExtra("password").toString()
+        val name = intent.getStringExtra("name").toString()
 
+        val user = FirebaseAuth.getInstance().currentUser
 
-        if (username != null) {
+        if (user != null) {
             database.collection("users").document(username).get().addOnSuccessListener {
-                nameField.text = it.get("name") as String?
-                //nameField.text = name
+                nameField.text = user.displayName
+
+
             }
         }
+
 
 
         voice = findViewById(R.id.voiceButton)

@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         /** SOLUTION TO DEPRECATION **/
         val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                //val task = GoogleSignIn.getSignedInAccountFromIntent(signInIntent)
+                //val task = GoogleSignIn.getSignedInAccountFromIntent(signInIntent) // --------> NO
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
 
                 try {

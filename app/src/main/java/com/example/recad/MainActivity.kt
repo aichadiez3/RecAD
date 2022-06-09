@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     //Instance that calls to database in Firebase
     private val database = FirebaseFirestore.getInstance()
+    //lateinit var googleClient: GoogleSignInClient
 
     private lateinit var detector: GestureDetectorCompat
     private lateinit var loginButton: ImageView
@@ -135,7 +136,8 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         /** SOLUTION TO DEPRECATION **/
         val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(signInIntent)
+                //val task = GoogleSignIn.getSignedInAccountFromIntent(signInIntent)
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
 
                 try {
                     val account = task.getResult(ApiException::class.java)
@@ -148,13 +150,14 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
                                 showHome(account.email ?: "", ProviderType.GOOGLE)
                                 session()
                             } else {
+
                                 showAlert()
                             }
                         }
 
                     }
                 } catch(e: ApiException){
-                    showAlert()
+                    Toast.makeText(this, "Google sign in failed with error ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -167,7 +170,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
 
         googleIcon.setOnClickListener {
-            launcher.launch(signInIntent)
+            launcher.launch(googleClient.signInIntent)
         }
 
 

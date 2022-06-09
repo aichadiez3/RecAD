@@ -51,7 +51,7 @@ class HomeActivity : AppCompatActivity() {
 
         settings = findViewById(R.id.settingsButton)
         settings.setOnClickListener {
-            showAlert(username, password)
+            showDialog()
             //Toast.makeText(this, "Settings is unavailable", Toast.LENGTH_SHORT).show()
         }
 
@@ -74,7 +74,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
 
-
+/*
     // Guardado de datos
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit() // Es un fichero compartido de preferencias del tipo clave-valor compartido en toda nuestra app
         val bundle = intent.extras
@@ -87,10 +87,11 @@ class HomeActivity : AppCompatActivity() {
 
         //setup(email ?: "", provider ?: "")
 
+ */
     }
 
 
-    private fun showAlert(username: String, password: String){
+    private fun showDialog(){
         val builder = AlertDialog.Builder(this@HomeActivity)
         builder.setTitle("Delete account")
         builder.setMessage("We are sorry to see you go. Are you sure you want to delete your account?")

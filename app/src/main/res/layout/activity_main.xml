@@ -65,7 +65,7 @@
         android:gravity="start|center_horizontal"
         android:hint="@string/username"
         android:inputType="textPersonName"
-        android:textColorHighlight="@color/pink_light"
+        android:textColorHighlight="@color/pink_main"
         android:textColorHint="#BDBDBD"
         android:textColorLink="@color/pink_dark"
         app:layout_constraintBottom_toBottomOf="parent"

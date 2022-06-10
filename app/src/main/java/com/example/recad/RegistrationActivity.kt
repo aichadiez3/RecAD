@@ -114,6 +114,7 @@ class RegistrationActivity : AppCompatActivity() {
             var date = findViewById<EditText>(R.id.dateField).text.toString()
             var gender = spinner.selectedItem.toString()
             var language = null
+            var dementia = null
 
 
             // When parameters of the new user are correct, we create it into Firebase
@@ -131,7 +132,8 @@ class RegistrationActivity : AppCompatActivity() {
                                 "surname" to surname,
                                 "date of birth" to date,
                                 "gender" to gender,
-                                "language" to language)
+                                "language" to language,
+                                "has_dementia" to dementia)
                             )
 
                             Intent(this@RegistrationActivity, HomeActivity::class.java).apply {

@@ -77,6 +77,17 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName=".HomeActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.example.recad.SettingsActivity" />
+                <category android:name="android.intent.category.SETTINGS" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 

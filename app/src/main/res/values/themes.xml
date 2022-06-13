@@ -24,8 +24,10 @@
 
     </style>
 
-    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem"></style>
-    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem"></style>
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
+    </style>
+    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+    </style>
 
 
     <style name="datePickerTheme" parent="android:Theme.Material.Light.Dialog">
@@ -36,6 +38,13 @@
         <item name="android:windowBackground">@color/pink_light</item>
         <!-- Ok Cancel Color-->
         <item name="android:textColor">@color/pink_dark</item>
+    </style>
+
+
+    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="checkedIconTint">@color/white</item>
     </style>
 
 </resources>

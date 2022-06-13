@@ -23,7 +23,7 @@
     <string name="prefs_file">com.example.recad.PREFERENCE_FILE_KEY</string>
     <string name="google_login">Google login</string>
     <string name="app_id">892954487862</string>
-    <string name="has_previous_dementia_diagnosis">Has previous dementia diagnosis?</string>
+    <string name="select_options">Select the options that apply</string>
 
 
     <string-array name="options">

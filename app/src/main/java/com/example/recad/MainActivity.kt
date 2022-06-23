@@ -143,14 +143,20 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
                         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
                             if(it.isSuccessful){
-                                database.collection("users").document(account.email.toString()).set(
-                                    hashMapOf("name" to account.displayName,
-                                        "surname" to null,
-                                        "date of birth" to null,
-                                        "gender" to null,
-                                        "language" to null,
-                                        "antecedents" to null)
-                                )
+
+                                database.collection("users").document(account.email.toString()).get().addOnFailureListener {
+                                        database.collection("users").document(account.email.toString()).set(
+                                            hashMapOf("name" to account.displayName,
+                                                "surname" to "",
+                                                "date of birth" to "",
+                                                "gender" to null,
+                                                "language" to null,
+                                                "antecedents" to null)
+                                        )
+                                }
+
+
+
                                 showHome(account.email ?: "")
                                 session()
                             } else {

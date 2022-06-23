@@ -79,7 +79,7 @@ class SettingsActivity : AppCompatActivity() {
         surnameField = findViewById(R.id.editSurname)
         birthdayField = findViewById(R.id.dateField2)
         val group = findViewById<ChipGroup>(R.id.chipGroup)
-
+        var antecedents = arrayListOf<String>()
 
         // -------> get external data
         database.collection("users").document(user.email.toString()).get().addOnSuccessListener { document ->
@@ -89,10 +89,9 @@ class SettingsActivity : AppCompatActivity() {
                 birthdayField.text = Editable.Factory.getInstance().newEditable(document.get("date of birth").toString())
                 spinnerGender.setSelection(adaptador1.getPosition(document.get("gender").toString()))
                 spinnerLanguages.setSelection(adaptador2.getPosition(document.get("language").toString()))
-                //var listdata = document.get("antecedents")
-                    // -----> Falta que marque los spinners correspondientes a su id
+                antecedents = document.get("antecedents") as ArrayList<String>
 
-
+            // -----> Falta que marque los spinners correspondientes a su id
 
 
             } else {
@@ -120,13 +119,17 @@ class SettingsActivity : AppCompatActivity() {
 
             languageField = spinnerLanguages.selectedItem.toString()
             genderField = spinnerGender.selectedItem.toString()
-            var antecedents = arrayListOf<String>()
+
 
             val ids = group.checkedChipIds
-            for(id in ids){
-                val text = group.findViewById<Chip>(id).text.toString()
-                antecedents.add(text)
+            if(ids.isNotEmpty()){
+                antecedents.clear()
+                for(id in ids){
+                    val text = group.findViewById<Chip>(id).text.toString()
+                    antecedents.add(text)
+                }
             }
+
 
 
             val verif = saveInfo(nameField.text.toString(), surnameField.text.toString(), birthdayField.text.toString(), genderField, languageField, antecedents)

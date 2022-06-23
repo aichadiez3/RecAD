@@ -3,6 +3,7 @@ package com.example.recad
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -28,18 +29,10 @@ class HomeActivity : AppCompatActivity() {
 
         nameField = findViewById(R.id.nameText)
 
-       //Get the information from the user from DB
-
-        //val username = intent.getStringExtra("email").toString()
-        val name = intent.getStringExtra("name").toString()
-
-
-
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
-            database.collection("users").document(user.email.toString()).get().addOnSuccessListener {
-                nameField.text = user.displayName
-                //nameField.text = name
+            database.collection("users").document(user.email.toString()).get().addOnSuccessListener { document ->
+                nameField.text = Editable.Factory.getInstance().newEditable(document.get("name").toString())
             }
         }
 

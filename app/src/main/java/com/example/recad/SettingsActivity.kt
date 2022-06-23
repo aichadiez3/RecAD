@@ -1,23 +1,23 @@
 package com.example.recad
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 class SettingsActivity : AppCompatActivity() {
 
     private val database = FirebaseFirestore.getInstance()
-
+    private lateinit var user : FirebaseUser
     private lateinit var delete: TextView
     private lateinit var nameField: EditText
     private lateinit var surnameField: EditText
@@ -33,6 +33,9 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        user = FirebaseAuth.getInstance().currentUser!!
+
 
         // ------> Spinners management
         val spinnerGender = findViewById<Spinner>(R.id.genderSpinner)
@@ -111,36 +114,51 @@ class SettingsActivity : AppCompatActivity() {
             Toast.makeText(this, "Selected: $antecedents", Toast.LENGTH_SHORT).show()
 
 
-            saveInfo(nameField.text.toString(), surnameField.text.toString(), birthdayField.text.toString(), genderField, languageField, antecedents)
+            val verif = saveInfo(nameField.text.toString(), surnameField.text.toString(), birthdayField.text.toString(), genderField, languageField, antecedents)
+            if (verif){
+                finish()
+                Toast.makeText(this, "Data changed successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Error updating info", Toast.LENGTH_SHORT).show()
+            }
 
-            finish()
-            //Toast.makeText(this, "Data changed successfully", Toast.LENGTH_SHORT).show()
         }
 
 
     }
 
-    private fun saveInfo(name:String, surname:String, date:String, gender:String, language:String, antec:ArrayList<String>) {
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            database.collection("users").document(user.email.toString()).addSnapshotListener { snapshot, e ->
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e)
-                    Toast.makeText(this, "Listen failed.", Toast.LENGTH_SHORT).show()
-                    return@addSnapshotListener
-                }
+    private fun saveInfo(name:String, surname:String, date:String, gender:String, language:String, antec:ArrayList<String>): Boolean {
 
-                if (snapshot != null && snapshot.exists()) {
-                    Log.d(TAG, "-------------------> Current data: ${snapshot.data}")
-                    Toast.makeText(this, "Data changed successfully", Toast.LENGTH_SHORT).show()
-                } else {
-                    Log.d(TAG, "-------------------> Current data: null")
-                    Toast.makeText(this, "Current data: null", Toast.LENGTH_SHORT).show()
-                }
+        if (user != null) {
+            database.collection("users").document(user.email.toString()).update("name", name)
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error updating name", Toast.LENGTH_SHORT).show() }
+            database.collection("users").document(user.email.toString()).update("surname", surname)
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error updating surname", Toast.LENGTH_SHORT).show() }
+            database.collection("users").document(user.email.toString()).update("date of birth", date)
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error updating date of birth", Toast.LENGTH_SHORT).show() }
+            database.collection("users").document(user.email.toString()).update("language", language)
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error updating language", Toast.LENGTH_SHORT).show() }
+            database.collection("users").document(user.email.toString()).update("gender", gender)
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error updating gender", Toast.LENGTH_SHORT).show() }
+            database.collection("users").document(user.email.toString()).update("antecedents", antec)
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error updating antecedents", Toast.LENGTH_SHORT).show() }
+
+            val passw1 = Editable.Factory.getInstance().newEditable(findViewById<EditText>(R.id.changePassword).text)
+            val passw2 = Editable.Factory.getInstance().newEditable(findViewById<EditText>(R.id.changePassword2).text)
+            if (passw1.isNotEmpty() && passw2.isNotEmpty()) {
+                    changePassword(user, passw1, passw2)
             }
 
 
-
+            return true
+        } else {
+            return false
         }
 
     }
@@ -169,11 +187,7 @@ class SettingsActivity : AppCompatActivity() {
                         .delete() // delete the collection associated to the registered email
 
                     user.delete().addOnCompleteListener {
-                        Toast.makeText(
-                            this,
-                            "Account successfully deleted",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(this, "Account successfully deleted", Toast.LENGTH_SHORT).show()
                         finish()
                         startActivity(Intent(this, MainActivity::class.java))
                     }
@@ -189,5 +203,21 @@ class SettingsActivity : AppCompatActivity() {
 
     }
 
+    private fun changePassword(user: FirebaseUser, oldPass: Editable, newPass: Editable){
+        val credential = EmailAuthProvider.getCredential(user.email.toString(), oldPass.toString())
+        user.reauthenticate(credential).addOnCompleteListener {  task ->
+            if(task.isSuccessful){
+                user.updatePassword(newPass.toString())
+                    .addOnCompleteListener {
+                        Toast.makeText(this, "Password changed", Toast.LENGTH_SHORT).show() }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Error changing the password", Toast.LENGTH_SHORT).show() }
+
+            } else {
+                Toast.makeText(this, "Error with user authentication", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
 
 }

@@ -73,7 +73,8 @@
         android:id="@+id/dateField2"
         android:layout_width="210dp"
         android:layout_height="48dp"
-        android:layout_marginStart="96dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="@string/select_birthdate"
         android:importantForAutofill="no"
@@ -82,10 +83,8 @@
         android:textColorHighlight="@color/pink_main"
         android:textColorHint="@color/gray_dark"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/calendarImage2"
         app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/editSurname"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/editSurname" />
 
     <ImageView
         android:id="@+id/calendarImage2"
@@ -134,32 +133,13 @@
         app:layout_constraintVertical_bias="0.12" />
 
     <EditText
-        android:id="@+id/changePassword"
-        android:layout_width="218dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:hint="Change password"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:textColor="@color/text_hint"
-        android:textColorHighlight="@color/pink_main"
-        android:textColorHint="@color/gray_dark"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/changePassword2"
-        app:layout_constraintEnd_toEndOf="@+id/textView7"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toEndOf="@+id/imageView12"
-        app:startIconDrawable="@drawable/noun_email" />
-
-    <EditText
         android:id="@+id/changePassword2"
         android:layout_width="220dp"
         android:layout_height="48dp"
         android:layout_marginBottom="12dp"
         android:editable="true"
         android:ems="10"
-        android:hint="Confirm password"
+        android:hint="@string/enter_new_password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
         android:textColor="@color/text_hint"
@@ -170,6 +150,25 @@
         app:layout_constraintEnd_toEndOf="@+id/textView7"
         app:layout_constraintHorizontal_bias="0.358"
         app:layout_constraintStart_toEndOf="@+id/imageView12" />
+
+    <EditText
+        android:id="@+id/changePassword"
+        android:layout_width="220dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:editable="true"
+        android:ems="10"
+        android:hint="Old password"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:textColor="@color/text_hint"
+        android:textColorHighlight="@color/pink_main"
+        android:textColorHint="@color/gray_dark"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView7"
+        app:layout_constraintHorizontal_bias="0.341"
+        app:layout_constraintStart_toEndOf="@+id/imageView12"
+        app:layout_constraintTop_toTopOf="@+id/textView7" />
 
     <ImageView
         android:id="@+id/imageView12"

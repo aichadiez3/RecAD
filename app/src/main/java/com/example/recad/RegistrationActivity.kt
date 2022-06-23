@@ -113,7 +113,6 @@ class RegistrationActivity : AppCompatActivity() {
             var surname = findViewById<EditText>(R.id.surnameField).text.toString()
             var date = findViewById<EditText>(R.id.dateField).text.toString()
             var gender = spinner.selectedItem.toString()
-            var language = null
 
 
             // When parameters of the new user are correct, we create it into Firebase
@@ -131,16 +130,19 @@ class RegistrationActivity : AppCompatActivity() {
                                 "surname" to surname,
                                 "date of birth" to date,
                                 "gender" to gender,
-                                "language" to language)
+                                "language" to null,
+                                "antecedents" to null)
                             )
 
-
+/*
                             Intent(this@RegistrationActivity, SettingsActivity::class.java).apply {
                                 putExtra("name", name)
                                 putExtra("surname", surname)
                                 putExtra("birthdate", date)
                                 putExtra("gender", gender)
                             }
+
+ */
 
                             showWelcome()
                         }

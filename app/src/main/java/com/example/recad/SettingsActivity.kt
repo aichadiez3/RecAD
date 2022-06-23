@@ -1,8 +1,10 @@
 package com.example.recad
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -76,13 +78,29 @@ class SettingsActivity : AppCompatActivity() {
         nameField = findViewById(R.id.editName)
         surnameField = findViewById(R.id.editSurname)
         birthdayField = findViewById(R.id.dateField2)
+        val group = findViewById<ChipGroup>(R.id.chipGroup)
+
 
         // -------> get external data
-        nameField.text = Editable.Factory.getInstance().newEditable(intent.getStringExtra("name").toString())
-        surnameField.text = Editable.Factory.getInstance().newEditable(intent.getStringExtra("surname").toString())
-        birthdayField.text = Editable.Factory.getInstance().newEditable(intent.getStringExtra("date of birth").toString())
-        val gender = intent.getStringExtra("gender").toString()
-        spinnerGender.setSelection(adaptador1.getPosition(gender))
+        database.collection("users").document(user.email.toString()).get().addOnSuccessListener { document ->
+            if(document != null){
+                nameField.text = Editable.Factory.getInstance().newEditable(document.get("name").toString())
+                surnameField.text = Editable.Factory.getInstance().newEditable(document.get("surname").toString())
+                birthdayField.text = Editable.Factory.getInstance().newEditable(document.get("date of birth").toString())
+                spinnerGender.setSelection(adaptador1.getPosition(document.get("gender").toString()))
+                spinnerLanguages.setSelection(adaptador2.getPosition(document.get("language").toString()))
+                //var listdata = document.get("antecedents")
+                    // -----> Falta que marque los spinners correspondientes a su id
+
+
+
+
+            } else {
+                Log.d(TAG, "No such document")
+            }
+        }.addOnFailureListener {
+            Toast.makeText(this, "Error getting user info", Toast.LENGTH_SHORT).show()
+        }
 
 
 
@@ -104,14 +122,11 @@ class SettingsActivity : AppCompatActivity() {
             genderField = spinnerGender.selectedItem.toString()
             var antecedents = arrayListOf<String>()
 
-            val group = findViewById<ChipGroup>(R.id.chipGroup)
             val ids = group.checkedChipIds
             for(id in ids){
                 val text = group.findViewById<Chip>(id).text.toString()
                 antecedents.add(text)
             }
-
-            Toast.makeText(this, "Selected: $antecedents", Toast.LENGTH_SHORT).show()
 
 
             val verif = saveInfo(nameField.text.toString(), surnameField.text.toString(), birthdayField.text.toString(), genderField, languageField, antecedents)

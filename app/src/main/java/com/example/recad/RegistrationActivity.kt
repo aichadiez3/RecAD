@@ -114,7 +114,6 @@ class RegistrationActivity : AppCompatActivity() {
             var date = findViewById<EditText>(R.id.dateField).text.toString()
             var gender = spinner.selectedItem.toString()
             var language = null
-            var dementia = null
 
 
             // When parameters of the new user are correct, we create it into Firebase
@@ -132,15 +131,16 @@ class RegistrationActivity : AppCompatActivity() {
                                 "surname" to surname,
                                 "date of birth" to date,
                                 "gender" to gender,
-                                "language" to language,
-                                "has_dementia" to dementia)
+                                "language" to language)
                             )
 
-                            Intent(this@RegistrationActivity, HomeActivity::class.java).apply {
-                                putExtra("name", name)
-                            /*    putExtra("email", user.email.toString())*/
-                            }
 
+                            Intent(this@RegistrationActivity, SettingsActivity::class.java).apply {
+                                putExtra("name", name)
+                                putExtra("surname", surname)
+                                putExtra("birthdate", date)
+                                putExtra("gender", gender)
+                            }
 
                             showWelcome()
                         }
@@ -154,7 +154,6 @@ class RegistrationActivity : AppCompatActivity() {
 
 
     }
-
 
     private fun showAlert(){
         val builder = AlertDialog.Builder(this)
@@ -179,12 +178,12 @@ class RegistrationActivity : AppCompatActivity() {
 
     }
 
-    fun onDateSelected(day:Int, month:Int, year:Int){
+    private fun onDateSelected(day:Int, month:Int, year:Int){
         editDate.setText("$day/"+(month+1).toString() +"/$year")
     }
 
     private fun validateForm(email: String?, password:String?) : Boolean {
-        val isValidEmail = email != null && email.isNotBlank() && email.contains("@")
+        val isValidEmail = email != null && email.isNotBlank() && (email.contains("@gmail.com") || email.contains("@hotmail.com") || email.contains("@yahoo.com"))
         val isValidPassw = password != null && password.isNotBlank() && password.length >= 6
         return isValidEmail && isValidPassw
     }

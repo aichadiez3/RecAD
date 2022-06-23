@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
+import com.google.firebase.firestore.FirebaseFirestore
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.text.SimpleDateFormat
@@ -20,6 +21,8 @@ import java.util.*
 
 @Suppress("DEPRECATION")
 class RecordingActivity : AppCompatActivity() {
+
+    private val database = FirebaseFirestore.getInstance()
 
     private lateinit var startButton: ImageView
     private lateinit var stopButton: ImageView
@@ -85,7 +88,20 @@ class RecordingActivity : AppCompatActivity() {
                 mr.stop()
                 mr.release()
                 enableStart()
+/*
+                // SAVE INTO FIREBASE
+                var record = "record-$currentDate.3gp"
+                var creationdate = currentDate
 
+                val user = FirebaseAuth.getInstance().currentUser
+                if (user != null) {
+                    database.collection("users").document(user.email.toString()).collection("records").document(record).set(
+                        hashMapOf("record number" to record,
+                            "record date" to creationdate)
+                    )
+                }
+
+ */
             }
 
         /*

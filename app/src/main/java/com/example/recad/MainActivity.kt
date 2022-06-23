@@ -28,11 +28,6 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-enum class ProviderType {
-    BASIC, GOOGLE
-}
-
-
 class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     //Instance that calls to database in Firebase
@@ -89,11 +84,17 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         changePass.setOnClickListener{
             val auth = FirebaseAuth.getInstance()
             val emailAddress = usernameField.text.toString()
-            auth.sendPasswordResetEmail(emailAddress).addOnCompleteListener { task ->
+
+            if(emailAddress.isNotEmpty()){
+                auth.sendPasswordResetEmail(emailAddress).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this@MainActivity, "Email sent to account $emailAddress", Toast.LENGTH_SHORT).show()
                     }
                 }
+            } else {
+                Toast.makeText(this@MainActivity, "Enter username to send password reset email", Toast.LENGTH_SHORT).show()
+            }
+
 
         }
 
@@ -132,7 +133,6 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         /** SOLUTION TO DEPRECATION **/
         val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                //val task = GoogleSignIn.getSignedInAccountFromIntent(signInIntent) // --------> NO
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
 
                 try {
@@ -143,6 +143,14 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
                         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
                             if(it.isSuccessful){
+                                database.collection("users").document(account.email.toString()).set(
+                                    hashMapOf("name" to account.displayName,
+                                        "surname" to null,
+                                        "date of birth" to null,
+                                        "gender" to null,
+                                        "language" to null,
+                                        "antecedents" to null)
+                                )
                                 showHome(account.email ?: "")
                                 session()
                             } else {
@@ -178,7 +186,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
     private fun setup(){
         FirebaseAuth.getInstance().signInWithEmailAndPassword(usernameField.text.toString(),
             passwordField.text.toString()).addOnCompleteListener {
-            //notifies if the user has been created correctly
+            //notifies if the user has signed in correctly
             if(it.isSuccessful){
                 showHome(it.result?.user?.email ?: "")
             } else {
@@ -212,6 +220,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
     private fun showHome(email: String){
 
         database.collection("users").document(email).get().addOnSuccessListener {
+
             val homeIntent = Intent(this, HomeActivity::class.java).apply {
                 putExtra("email", email)
             }

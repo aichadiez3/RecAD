@@ -25,7 +25,6 @@
     <string name="app_id">892954487862</string>
     <string name="select_options">Select the options that apply</string>
 
-
     <string-array name="options">
         <item>Gender…</item>
         <item>Male</item>

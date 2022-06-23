@@ -30,19 +30,18 @@ class HomeActivity : AppCompatActivity() {
 
        //Get the information from the user from DB
 
-        val username = intent.getStringExtra("email").toString()
+        //val username = intent.getStringExtra("email").toString()
         val name = intent.getStringExtra("name").toString()
 
+
+
         val user = FirebaseAuth.getInstance().currentUser
-
         if (user != null) {
-            database.collection("users").document(username).get().addOnSuccessListener {
+            database.collection("users").document(user.email.toString()).get().addOnSuccessListener {
                 nameField.text = user.displayName
-
-
+                //nameField.text = name
             }
         }
-
 
 
         voice = findViewById(R.id.voiceButton)

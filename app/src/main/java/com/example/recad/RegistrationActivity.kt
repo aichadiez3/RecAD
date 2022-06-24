@@ -131,18 +131,9 @@ class RegistrationActivity : AppCompatActivity() {
                                 "date of birth" to date,
                                 "gender" to gender,
                                 "language" to null,
-                                "antecedents" to null)
+                                "antecedents" to null,
+                                "diagnosis" to null)
                             )
-
-/*
-                            Intent(this@RegistrationActivity, SettingsActivity::class.java).apply {
-                                putExtra("name", name)
-                                putExtra("surname", surname)
-                                putExtra("birthdate", date)
-                                putExtra("gender", gender)
-                            }
-
- */
 
                             showWelcome()
                         }

@@ -66,20 +66,6 @@ class HomeActivity : AppCompatActivity() {
         }
 
 
-/*
-    // Guardado de datos
-        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit() // Es un fichero compartido de preferencias del tipo clave-valor compartido en toda nuestra app
-        val bundle = intent.extras
-        val email = bundle?.getString("email")
-        val provider = bundle?.getString("provider")
-
-        prefs.putString("email", email.toString())
-        prefs.putString("provider", provider.toString())
-        prefs.apply()
-
-        //setup(email ?: "", provider ?: "")
-
- */
     }
 
 

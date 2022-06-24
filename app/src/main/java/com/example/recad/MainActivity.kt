@@ -144,18 +144,21 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
                         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
                             if(it.isSuccessful){
 
-                                database.collection("users").document(account.email.toString()).get().addOnFailureListener {
+                                database.collection("users").document(account.email.toString()).get().addOnSuccessListener { document ->
+                                    if(document.get("date of birth") == null){
                                         database.collection("users").document(account.email.toString()).set(
                                             hashMapOf("name" to account.displayName,
                                                 "surname" to "",
                                                 "date of birth" to "",
                                                 "gender" to null,
                                                 "language" to null,
-                                                "antecedents" to null)
+                                                "antecedents" to null,
+                                                "diagnosis" to null)
                                         )
+                                    }
+
+
                                 }
-
-
 
                                 showHome(account.email ?: "")
                                 session()
@@ -192,7 +195,6 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
     private fun setup(){
         FirebaseAuth.getInstance().signInWithEmailAndPassword(usernameField.text.toString(),
             passwordField.text.toString()).addOnCompleteListener {
-            //notifies if the user has signed in correctly
             if(it.isSuccessful){
                 showHome(it.result?.user?.email ?: "")
             } else {

@@ -50,11 +50,17 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.1' // Material Design Components
     api 'com.google.android.material:material:1.6.1'
 
-    implementation 'com.google.firebase:firebase-firestore:24.1.2'
+    implementation 'com.google.firebase:firebase-firestore:24.2.0'
     implementation 'com.google.firebase:firebase-analytics:21.0.0'
-    implementation 'com.google.firebase:firebase-auth:21.0.5'
+    implementation 'com.google.firebase:firebase-auth:21.0.6'
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
-    implementation platform('com.google.firebase:firebase-bom:29.3.1')
+
+    // ADD CLOUD STORAGE SDK
+    // ----------> Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:30.1.0')
+    // ----------> Declare the dependency for the Cloud Storage library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-storage-ktx'
 
 
 

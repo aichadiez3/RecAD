@@ -89,7 +89,15 @@ class SettingsActivity : AppCompatActivity() {
                 birthdayField.text = Editable.Factory.getInstance().newEditable(document.get("date of birth").toString())
                 spinnerGender.setSelection(adaptador1.getPosition(document.get("gender").toString()))
                 spinnerLanguages.setSelection(adaptador2.getPosition(document.get("language").toString()))
-                antecedents = document.get("antecedents") as ArrayList<String>
+                var doc = document.get("antecedents")
+                if(doc == null){
+                    antecedents.clear()
+                }else{
+                    antecedents =  doc as ArrayList<String>
+                }
+
+
+
 
             // -----> Falta que marque los spinners correspondientes a su id
 
@@ -120,7 +128,6 @@ class SettingsActivity : AppCompatActivity() {
             languageField = spinnerLanguages.selectedItem.toString()
             genderField = spinnerGender.selectedItem.toString()
 
-
             val ids = group.checkedChipIds
             if(ids.isNotEmpty()){
                 antecedents.clear()
@@ -128,9 +135,9 @@ class SettingsActivity : AppCompatActivity() {
                     val text = group.findViewById<Chip>(id).text.toString()
                     antecedents.add(text)
                 }
+            } else {
+                antecedents.clear()
             }
-
-
 
             val verif = saveInfo(nameField.text.toString(), surnameField.text.toString(), birthdayField.text.toString(), genderField, languageField, antecedents)
             if (verif){
@@ -147,37 +154,33 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun saveInfo(name:String, surname:String, date:String, gender:String, language:String, antec:ArrayList<String>): Boolean {
 
-        if (user != null) {
-            database.collection("users").document(user.email.toString()).update("name", name)
-                .addOnFailureListener {
-                    Toast.makeText(this, "Error updating name", Toast.LENGTH_SHORT).show() }
-            database.collection("users").document(user.email.toString()).update("surname", surname)
-                .addOnFailureListener {
-                    Toast.makeText(this, "Error updating surname", Toast.LENGTH_SHORT).show() }
-            database.collection("users").document(user.email.toString()).update("date of birth", date)
-                .addOnFailureListener {
-                    Toast.makeText(this, "Error updating date of birth", Toast.LENGTH_SHORT).show() }
-            database.collection("users").document(user.email.toString()).update("language", language)
-                .addOnFailureListener {
-                    Toast.makeText(this, "Error updating language", Toast.LENGTH_SHORT).show() }
-            database.collection("users").document(user.email.toString()).update("gender", gender)
-                .addOnFailureListener {
-                    Toast.makeText(this, "Error updating gender", Toast.LENGTH_SHORT).show() }
-            database.collection("users").document(user.email.toString()).update("antecedents", antec)
-                .addOnFailureListener {
-                    Toast.makeText(this, "Error updating antecedents", Toast.LENGTH_SHORT).show() }
+        database.collection("users").document(user.email.toString()).update("name", name)
+            .addOnFailureListener {
+                Toast.makeText(this, "Error updating name", Toast.LENGTH_SHORT).show() }
+        database.collection("users").document(user.email.toString()).update("surname", surname)
+            .addOnFailureListener {
+                Toast.makeText(this, "Error updating surname", Toast.LENGTH_SHORT).show() }
+        database.collection("users").document(user.email.toString()).update("date of birth", date)
+            .addOnFailureListener {
+                Toast.makeText(this, "Error updating date of birth", Toast.LENGTH_SHORT).show() }
+        database.collection("users").document(user.email.toString()).update("language", language)
+            .addOnFailureListener {
+                Toast.makeText(this, "Error updating language", Toast.LENGTH_SHORT).show() }
+        database.collection("users").document(user.email.toString()).update("gender", gender)
+            .addOnFailureListener {
+                Toast.makeText(this, "Error updating gender", Toast.LENGTH_SHORT).show() }
+        database.collection("users").document(user.email.toString()).update("antecedents", antec)
+            .addOnFailureListener {
+                Toast.makeText(this, "Error updating antecedents", Toast.LENGTH_SHORT).show() }
 
-            val passw1 = Editable.Factory.getInstance().newEditable(findViewById<EditText>(R.id.changePassword).text)
-            val passw2 = Editable.Factory.getInstance().newEditable(findViewById<EditText>(R.id.changePassword2).text)
-            if (passw1.isNotEmpty() && passw2.isNotEmpty()) {
-                    changePassword(user, passw1, passw2)
-            }
-
-
-            return true
-        } else {
-            return false
+        val passw1 = Editable.Factory.getInstance().newEditable(findViewById<EditText>(R.id.changePassword).text)
+        val passw2 = Editable.Factory.getInstance().newEditable(findViewById<EditText>(R.id.changePassword2).text)
+        if (passw1.isNotEmpty() && passw2.isNotEmpty()) {
+                changePassword(user, passw1, passw2)
         }
+
+
+        return true
 
     }
 

@@ -7,6 +7,66 @@
     android:background="@color/white">
 
 
+    <TextView
+        android:id="@+id/alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="196dp"
+        android:text="@string/waiting_for_permissions"
+        android:textColor="#DFD2439D"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/upload"
+        android:layout_width="112dp"
+        android:layout_height="137dp"
+        android:layout_marginBottom="84dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.668"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/noun_cloud_upload" />
+
+    <ImageView
+        android:id="@+id/disconnection"
+        android:layout_width="111dp"
+        android:layout_height="129dp"
+        android:layout_marginBottom="92dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.67"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/noun_disconnected_cloud" />
+
+    <ImageView
+        android:id="@+id/sync"
+        android:layout_width="110dp"
+        android:layout_height="137dp"
+        android:layout_marginBottom="84dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.667"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/noun_cloud_synchronization" />
+
+    <ImageView
+        android:id="@+id/done"
+        android:layout_width="112dp"
+        android:layout_height="137dp"
+        android:layout_marginBottom="84dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.668"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/noun_cloud_done" />
+
     <ImageView
         android:id="@+id/recordButton"
         android:layout_width="139dp"
@@ -16,33 +76,55 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
+        app:layout_constraintTop_toBottomOf="@+id/alert"
+        app:layout_constraintVertical_bias="0.149"
         app:srcCompat="@drawable/hd_black_pink_voice_recorder_phone_flat_icon_png_316319219134wdqikepox_removebg_preview" />
 
     <ImageView
+        android:id="@+id/enabledIcon"
+        android:layout_width="142dp"
+        android:layout_height="127dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/recordButton"
+        app:layout_constraintStart_toStartOf="@+id/recordButton"
+        app:layout_constraintTop_toTopOf="@+id/recordButton"
+        app:srcCompat="@drawable/enabled_recording" />
+
+    <ImageView
         android:id="@+id/stopButton"
-        android:layout_width="157dp"
-        android:layout_height="144dp"
+        android:layout_width="140dp"
+        android:layout_height="128dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/enabledIcon"
+        app:layout_constraintEnd_toEndOf="@+id/enabledIcon"
+        app:layout_constraintStart_toStartOf="@+id/enabledIcon"
+        app:layout_constraintTop_toTopOf="@+id/enabledIcon"
+        app:srcCompat="@drawable/stop" />
+
+    <ImageView
+        android:id="@+id/pauseButton"
+        android:layout_width="46dp"
+        android:layout_height="40dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/playButton"
+        app:layout_constraintEnd_toEndOf="@+id/playButton"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="@+id/playButton"
+        app:layout_constraintTop_toTopOf="@+id/playButton"
+        app:layout_constraintVertical_bias="0.52"
+        app:srcCompat="@drawable/pause" />
+
+    <ImageView
+        android:id="@+id/playButton"
+        android:layout_width="61dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="120dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.282"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/stop" />
-
-    <TextView
-        android:id="@+id/alert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/waiting_for_permissions"
-        android:textColor="#DFD2439D"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/stopButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.726" />
+        app:srcCompat="@drawable/play" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

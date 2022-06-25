@@ -38,6 +38,9 @@ class RecordingActivity : AppCompatActivity() {
 
     private lateinit var startButton: ImageView
     private lateinit var stopButton: ImageView
+    private lateinit var playButton: ImageView
+    private lateinit var pauseButton: ImageView
+    private lateinit var uploadButton: ImageView
     private lateinit var alert: TextView
 
     private var isRecording: Boolean = false
@@ -46,6 +49,7 @@ class RecordingActivity : AppCompatActivity() {
     private var currentDate: String = ""
 
     private lateinit var mediaRecorder: MediaRecorder
+    private lateinit var mediaPlayer: MediaPlayer
     private var player: MediaPlayer? = null
     lateinit var mStorage : StorageReference
 
@@ -64,9 +68,10 @@ class RecordingActivity : AppCompatActivity() {
 
         startButton = findViewById(R.id.recordButton)
         stopButton = findViewById(R.id.stopButton)
+        playButton = findViewById(R.id.playButton)
+        pauseButton = findViewById(R.id.pauseButton)
+        uploadButton = findViewById(R.id.upload)
         alert = findViewById(R.id.alert)
-
-        mediaRecorder = MediaRecorder()
 
 
         var type = ""
@@ -104,8 +109,22 @@ class RecordingActivity : AppCompatActivity() {
 
         stopButton.setOnClickListener {
             stopRecording()
-            saveIntoCloudFirestore()
-            uploadAudio(type, recordRef)
+        }
+
+        uploadButton.setOnClickListener {
+            uploadToCloud(type)
+        }
+
+        playButton.setOnClickListener {
+            startPlaying(filePath)
+            playButton.isVisible = false
+            pauseButton.isVisible = true
+        }
+
+        pauseButton.setOnClickListener {
+            stopPlaying()
+            playButton.isVisible = true
+            pauseButton.isVisible = false
         }
 
     }
@@ -127,6 +146,7 @@ class RecordingActivity : AppCompatActivity() {
 
     private fun saveIntoCloudFirestore(){
 
+        isUploading()
         alert.text = "Uploading References..."
 
         database.collection("users").document(user.email.toString()).collection("records").document(recordRef).set(
@@ -149,6 +169,7 @@ class RecordingActivity : AppCompatActivity() {
         permissionToRecordAccepted = if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
             grantResults[0] == PackageManager.PERMISSION_GRANTED
         } else {
+            isDisconnected()
             false
         }
         if (!permissionToRecordAccepted) finish()
@@ -181,29 +202,29 @@ class RecordingActivity : AppCompatActivity() {
             mediaRecorder.stop()
             mediaRecorder.release()
             isRecording = false
-
         } else {
             mediaRecorder.release()
         }
 
-        enableStart()
+        endRecording()
 
     }
 
     private fun startPlaying(filePath:String) {
-        var player = MediaPlayer().apply {
+        mediaPlayer = MediaPlayer().apply {
             try {
                 setDataSource(filePath)
                 prepare()
-                start()
             } catch (e: IOException) {
-                Log.e(LOG_TAG, "Playing prepare() failed")           }
+                Log.e(LOG_TAG, "Playing prepare() failed")
+            }
+            start()
         }
     }
 
     private fun stopPlaying() {
-        player?.release()
-        player = null
+        mediaPlayer.pause()
+        mediaPlayer.release()
     }
 /*
     private fun terminateAndEraseFile(context: Context) {
@@ -236,8 +257,49 @@ class RecordingActivity : AppCompatActivity() {
         alert.text = "Recording Started..."
     }
 
+    private fun endRecording(){
+        alert.text = "Recording Finished"
+        findViewById<ImageView>(R.id.enabledIcon).isVisible = true
+        findViewById<ImageView>(R.id.upload).isVisible = true
+        stopButton.isVisible = false
+        startButton.isVisible = false
+        playButton.isVisible = true
+    }
+
+    private fun isDisconnected(){
+        findViewById<ImageView>(R.id.disconnection).isVisible = true
+        findViewById<ImageView>(R.id.upload).isVisible = false
+        findViewById<ImageView>(R.id.done).isVisible = false
+        findViewById<ImageView>(R.id.sync).isVisible = false
+    }
+
+    private fun uploadToCloud(type: String){
+        findViewById<ImageView>(R.id.disconnection).isVisible = false
+        findViewById<ImageView>(R.id.upload).isVisible = false
+        findViewById<ImageView>(R.id.done).isVisible = false
+        findViewById<ImageView>(R.id.sync).isVisible = false
+
+        saveIntoCloudFirestore()
+        uploadAudio(type, recordRef)
+    }
+
+    private fun isUploading(){
+        findViewById<ImageView>(R.id.disconnection).isVisible = false
+        findViewById<ImageView>(R.id.upload).isVisible = false
+        findViewById<ImageView>(R.id.done).isVisible = false
+        findViewById<ImageView>(R.id.sync).isVisible = true
+    }
+
+    private fun isUploaded(){
+        findViewById<ImageView>(R.id.disconnection).isVisible = false
+        findViewById<ImageView>(R.id.upload).isVisible = false
+        findViewById<ImageView>(R.id.done).isVisible = true
+        findViewById<ImageView>(R.id.sync).isVisible = false
+    }
 
     private fun waitBeforeClose(){
+
+        isUploaded()
 
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed(Runnable {

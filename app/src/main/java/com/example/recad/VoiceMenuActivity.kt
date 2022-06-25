@@ -18,7 +18,6 @@ class VoiceMenuActivity : AppCompatActivity() {
 
         startButton = findViewById(R.id.startButton)
         startButton.setOnClickListener {
-            finish()
             startActivity(Intent(this, RecordingActivity::class.java))
         }
 

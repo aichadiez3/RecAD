@@ -2,7 +2,6 @@ package com.example.recad
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.media.MediaRecorder
@@ -243,7 +242,6 @@ class RecordingActivity : AppCompatActivity() {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed(Runnable {
             finish()
-            startActivity(Intent(this, VoiceMenuActivity::class.java))
         }, 1500)
 
     }

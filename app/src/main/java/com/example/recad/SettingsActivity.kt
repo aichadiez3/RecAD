@@ -93,7 +93,7 @@ class SettingsActivity : AppCompatActivity() {
                 if(doc == null){
                     antecedents.clear()
                 }else{
-                    antecedents =  doc as ArrayList<String>
+                    antecedents = doc as ArrayList<String>
                 }
 
 

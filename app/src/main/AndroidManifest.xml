@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.recad">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -7,7 +8,10 @@
     <!-- adding record audio  permission -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- adding local storage permission -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +19,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:requestLegacyExternalStorage="true">
 
         <meta-data android:name="com.google.android.gms.common.APP_ID"
             android:value="@string/app_id" />
@@ -73,6 +78,17 @@
             android:exported="true" >
             <intent-filter>
                 <action android:name="com.example.recad.RecordingActivity" />
+                <category android:name="android.intent.category.VOICE" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Recording"
+            android:label="Record"
+            android:parentActivityName=".VoiceMenuActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.example.recad.Recording" />
                 <category android:name="android.intent.category.VOICE" />
             </intent-filter>
         </activity>

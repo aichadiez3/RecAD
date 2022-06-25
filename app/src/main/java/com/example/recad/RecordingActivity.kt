@@ -7,13 +7,14 @@ import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.view.View
+import android.os.Environment
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
@@ -22,140 +23,112 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
+import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-@Suppress("DEPRECATION")
+private const val LOG_TAG = "AudioRecordTest"
+private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
+
+
 class RecordingActivity : AppCompatActivity() {
 
     private val database = FirebaseFirestore.getInstance()
+    private lateinit var user : FirebaseUser
 
     private lateinit var startButton: ImageView
     private lateinit var stopButton: ImageView
     private lateinit var alert: TextView
+
+    private var isRecording: Boolean = false
+    private var filePath: String = ""
+    private var recordRef: String = ""
+    private var currentDate: String = ""
+
     private lateinit var mediaRecorder: MediaRecorder
-    private var permissionMic: Boolean = false
-    private var state: Boolean = false
-    private var path: String = ""
-
-
-    private lateinit var user : FirebaseUser
-
-    val AUDIO: Int = 0
-    lateinit var uri : Uri // Holds file google address
+    private var player: MediaPlayer? = null
     lateinit var mStorage : StorageReference
-    lateinit var urlPath: String
+
+    // Requesting permission to RECORD_AUDIO
+    private var permissionToRecordAccepted = false
+    private var permissions: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
+
 
 
     @SuppressLint("SimpleDateFormat")
-    @RequiresApi(Build.VERSION_CODES.S)
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recording)
+
 
         startButton = findViewById(R.id.recordButton)
         stopButton = findViewById(R.id.stopButton)
         alert = findViewById(R.id.alert)
 
-        mediaRecorder = MediaRecorder()             /**         AUDIO AND STORAGE CONFIGURATION         */
-
+        mediaRecorder = MediaRecorder()
 
 
         var type = ""
         user = FirebaseAuth.getInstance().currentUser!!
         database.collection("users").document(user.email.toString()).get().addOnSuccessListener { document ->
             type = document?.get("diagnosis")?.toString().toString()
+
         }
+
+        filePath = Environment.getExternalStorageDirectory().absolutePath
+
+        try{
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
+            enableStart()
+        } catch(e: Exception){
+            alert.text = "Permissions denied"
+            Toast.makeText(this, "permissions failed" , Toast.LENGTH_SHORT).show()
+            //Log.e(LOG_TAG, "permissions failed")
+            finish()
+        }
+
 
         // We initialize the cloud storage to child location records and the diagnosis type
         mStorage = FirebaseStorage.getInstance().getReference("Records/$type")
 
+        startButton.setOnClickListener {
+            val sdf = SimpleDateFormat("dd-M-yyyy-hhmmss")
+            currentDate = sdf.format(Date())
+            recordRef = "record-$currentDate.3gp"
 
-        // We ask for recording permissions
-        if(ActivityCompat.checkSelfPermission(this@RecordingActivity, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ),
-                111
-            )
-            permissionMic = true
-            alert.text = "Permissions okay"
+            filePath += "/$recordRef"
+            startRecording(filePath)
 
         }
 
-            /**
-                // FOR EXTERNAL STORAGE
-                val record = "record-$currentDate.3gp"
-                var path = "$record"
-                Files.createDirectory(Paths.get(path))
-
-                val compPath:String = Environment.getExternalStorageDirectory().absolutePath.toString() + path // esto es el nombre del archivo a guardar
-                val state = Environment.getExternalStorageState()
-
-                if (state != Environment.MEDIA_MOUNTED) {
-                    enableStart()
-                } else {
-                    alert.text="No SD card was found"
-                }
-
-             */
-
-
-            startButton.setOnClickListener {
-                Toast.makeText(this, mStorage.path.toString(), Toast.LENGTH_SHORT).show()
-                this.state = startRecording(mStorage.path)
-
-            }
-
-
-            // To stop recording
-            stopButton.setOnClickListener{ view: View? -> val it: Intent? = null
-
-                if(this.state){
-                    stopRecording(this.state)
-                } else {
-                    Toast.makeText(this, "Recording not started!", Toast.LENGTH_SHORT).show()
-                }
-
-                // Here we create the reference associated to the patient
-                saveIntoCloudFirestore()
-
-
-                it?.type = "audio/*"
-                it?.action = Intent.ACTION_GET_CONTENT
-                startActivityForResult(Intent.createChooser(it, "Create Audio"), AUDIO)
-
-
-
-            }
-
-
-
-
-
+        stopButton.setOnClickListener {
+            stopRecording()
+            saveIntoCloudFirestore()
+            uploadAudio(type, recordRef)
+        }
 
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if(requestCode==111 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
-            enableStart()
+    private fun uploadAudio(type: String, audioFile:String){
+
+        alert.text = "Uploading audio..."
+
+        var path = mStorage.child(type).child(audioFile)
+        var uri = Uri.fromFile(File(filePath))
+
+        path.putFile(uri).addOnSuccessListener {
+            alert.text = "Uploading Finished"
+            waitBeforeClose()
         }
     }
 
 
-
-    @SuppressLint("SimpleDateFormat")
     private fun saveIntoCloudFirestore(){
-        val sdf = SimpleDateFormat("dd-M-yyyy-hhmmss")
-        val currentDate = sdf.format(Date())
-        val recordRef = "record-$currentDate.3gp"
+
+        alert.text = "Uploading References..."
 
         database.collection("users").document(user.email.toString()).collection("records").document(recordRef).set(
             hashMapOf("record reference" to recordRef,
@@ -168,74 +141,86 @@ class RecordingActivity : AppCompatActivity() {
 
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        permissionToRecordAccepted = if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
+            grantResults[0] == PackageManager.PERMISSION_GRANTED
+        } else {
+            false
+        }
+        if (!permissionToRecordAccepted) finish()
+    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if(resultCode == RESULT_OK){
-            if(requestCode == AUDIO){
-                uri = data!!.data!!
-                upload()
+    private fun startRecording(filePath:String){
+        mediaRecorder = MediaRecorder().apply {
+            try {
+                setAudioSource(MediaRecorder.AudioSource.MIC)
+                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                setOutputFile(filePath)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                prepare()
+                isRecording = true
+            } catch (e: IOException) {
+                Log.e(LOG_TAG, "start recording prepare() failed")
+                isRecording = false
             }
-        }
 
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun upload(): String{
-        try {
-            var mReference = uri.lastPathSegment?.let {
-                mStorage.child(it) } // Contents last path segment
-            var url = ""
-            mReference?.putFile(uri)
-                ?.addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot? ->
-                    url = taskSnapshot!!.metadata!!.reference!!.downloadUrl.toString()
-                    Toast.makeText(this, "Successfully uploaded to Cloud. Url: $url", Toast.LENGTH_LONG).show()
-                }
-            return url
-        } catch(e: Exception){
-            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
-            return "Error in Upload to Cloud!"
-        }
-    }
-
-    private fun startRecording(filePath: String): Boolean{
-
-        try {
-            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB) // iS THE FORMAT FOR OPTIMIZING THE SPEECH CODING
-            mediaRecorder.setOutputFile(filePath)
-            mediaRecorder.prepare()
-            mediaRecorder.start()
-
+            start()
             enableStop()
 
-            Toast.makeText(this, "Recording started!", Toast.LENGTH_SHORT).show()
-            return true
-        } catch (e: IllegalStateException) {
-            e.printStackTrace()
-            return false
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return false
         }
     }
 
-    private fun stopRecording(state: Boolean){
-        if(state){
+    private fun stopRecording() {
+
+        if(isRecording){
             mediaRecorder.stop()
-            mediaRecorder.reset()
             mediaRecorder.release()
-            Toast.makeText(this, "Record has stopped. Registering into Cloud...", Toast.LENGTH_SHORT).show()
+            isRecording = false
+
+        } else {
+            mediaRecorder.release()
+        }
+
+        enableStart()
+
+    }
+
+    private fun startPlaying(filePath:String) {
+        var player = MediaPlayer().apply {
+            try {
+                setDataSource(filePath)
+                prepare()
+                start()
+            } catch (e: IOException) {
+                Log.e(LOG_TAG, "Playing prepare() failed")           }
         }
     }
 
-    private fun playRecording(urlPath: String){
-            var mp = MediaPlayer()
-            mp.setDataSource(urlPath)
-            mp.prepare()
-            mp.start()
+    private fun stopPlaying() {
+        player?.release()
+        player = null
     }
+/*
+    private fun terminateAndEraseFile(context: Context) {
+        Log.d(Constants.TAG, "RecordService terminateAndEraseFile")
+        stopRecording()
+        recording = false
+        deleteFile()
+    }
+
+    private fun deleteFile() {
+        Log.d(Constants.TAG, "RecordService deleteFile")
+        FileHelper.deleteFile(fileName)
+        fileName = null
+    }
+
+ */
 
     private fun enableStart(){
         startButton.isVisible = true
@@ -249,7 +234,17 @@ class RecordingActivity : AppCompatActivity() {
         startButton.isEnabled = false
         stopButton.isVisible = true
         stopButton.isEnabled = true
-        alert.text = "Press to stop recording"
+        alert.text = "Recording Started..."
     }
 
+
+    private fun waitBeforeClose(){
+
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed(Runnable {
+            finish()
+            startActivity(Intent(this, VoiceMenuActivity::class.java))
+        }, 1500)
+
+    }
 }

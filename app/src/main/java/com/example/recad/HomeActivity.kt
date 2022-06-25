@@ -1,12 +1,10 @@
 package com.example.recad
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -49,16 +47,18 @@ class HomeActivity : AppCompatActivity() {
 
         records = findViewById(R.id.recordsButton)
         records.setOnClickListener {
-            Toast.makeText(this, "Records is unavailable", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, ListActivity::class.java))
         }
 
         logout = findViewById(R.id.logoutButton)
         logout.setOnClickListener {
-
+/*
             // Borrado de datos
             val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
             prefs.clear()
             prefs.apply()
+
+ */
 
             FirebaseAuth.getInstance().signOut()
             onBackPressed()

@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
     <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimary">#AB434040</item>
         <item name="colorPrimaryVariant">@color/pink_light</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">#AB434040</item>
         <item name="colorAccent">@color/pink_dark</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/gray_dark</item>
@@ -30,6 +30,8 @@
     </style>
 
 
+
+
     <style name="datePickerTheme" parent="android:Theme.Material.Light.Dialog">
         <item name="android:colorAccent">@color/pink_dark</item>
         <!--selected Item color-->
@@ -40,6 +42,9 @@
         <item name="android:textColor">@color/pink_dark</item>
     </style>
 
+    <style name="ListFont" parent="@android:style/Widget.ListView">
+        <item name="android:textColor">#AB434040</item>
+    </style>
 
     <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
         <item name="chipBackgroundColor">@color/chip_background_color</item>

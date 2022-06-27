@@ -61,13 +61,26 @@
         app:srcCompat="@drawable/homeimage" />
 
     <ListView
-        android:id="@+id/listView"
-        android:layout_width="361dp"
-        android:layout_height="545dp"
-        android:visibility="visible"
+        android:id="@+id/list"
+        android:layout_width="316dp"
+        android:layout_height="528dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginBottom="25dp"
+        android:choiceMode="singleChoice"
+        android:fadeScrollbars="false"
+
+        android:fastScrollAlwaysVisible="true"
+        android:fastScrollEnabled="true"
+        android:listSelector="@color/pink_dark"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbarSize="10dp"
+        android:scrollbarThumbVertical="@drawable/scrollbar_style"
         app:layout_constraintBottom_toBottomOf="@+id/backRect"
-        app:layout_constraintEnd_toEndOf="@+id/backRect"
-        app:layout_constraintStart_toStartOf="@+id/backRect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homeButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

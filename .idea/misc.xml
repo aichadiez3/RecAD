@@ -5,14 +5,19 @@
       <map>
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.124" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/drawable/drop_shadow.xml" value="0.3665" />
+        <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/drawable/list_selector.xml" value="0.124" />
+        <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/drawable/listitem_normal.xml" value="0.123" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/drawable/round_pink_rectangle.xml" value="0.3635" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/drawable/round_rectangle.xml" value="0.3635" />
+        <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/drawable/row_selector.xml" value="0.123" />
+        <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/drawable/scrollbar_style.xml" value="0.124" />
+        <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/drawable/scrollbar_vertical_style.xml" value="0.123" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/drawable/small_rectangle.xml" value="0.3665" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout-w936dp/welcome.xml" value="0.275" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/about_1.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/about_2.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/activity_home.xml" value="0.4" />
-        <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/activity_list.xml" value="0.264" />
+        <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/activity_list.xml" value="0.152" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/activity_recording.xml" value="0.365625" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/activity_settings.xml" value="0.36666666666666664" />
@@ -26,10 +31,16 @@
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/change_password.xml" value="0.264" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/chip_background_color.xml" value="0.365625" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/chip_text_color.xml" value="0.365625" />
+        <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/custom_list.xml" value="0.253125" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/custom_spinner.xml" value="0.365625" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/custom_spinner_dropdown.xml" value="0.365625" />
+        <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/list_black_text.xml" value="0.253125" />
+        <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/list_edit_text.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/listitem_background.xml" value="0.11197916666666667" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/spinner_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/text_row_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/aicha/AndroidStudioProjects/RecAD/app/src/main/res/layout/welcome.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/aicha/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_list_item_1.xml" value="0.11302083333333333" />
       </map>
     </option>
   </component>

@@ -95,17 +95,6 @@
         </activity>
 
         <activity
-            android:name=".Recording"
-            android:label="Record"
-            android:parentActivityName=".VoiceMenuActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="com.example.recad.Recording" />
-                <category android:name="android.intent.category.VOICE" />
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name=".SettingsActivity"
             android:label="Settings"
             android:parentActivityName=".HomeActivity"

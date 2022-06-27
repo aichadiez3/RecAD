@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,23 +45,21 @@ class ListActivity : AppCompatActivity() {
         pauseButton = findViewById(R.id.pause)
         list  = findViewById(R.id.list)
 
+        mediaPlayer = MediaPlayer()
 
         user = FirebaseAuth.getInstance().currentUser!!
 
         database.collection("users").document(user.email.toString()).get().addOnSuccessListener { document ->
             var type = document?.get("diagnosis")?.toString().toString()
-
-        var referenceDir = "Records/$type"
+            var referenceDir = "Records/$type"
         mStorage = FirebaseStorage.getInstance().getReference(referenceDir)
 
 
-
         var arrayAdapter: ArrayAdapter<*>
-        recordsList = arrayListOf()//mutableListOf()
+        recordsList = arrayListOf()
 
 
         database.collection("users").document(user.email.toString()).collection("records").get().addOnSuccessListener { documents ->
-
             for (doc in documents) {
                 var recName = doc.data["record reference"].toString()
                 (recordsList as ArrayList<String>).add(recName)
@@ -71,53 +68,47 @@ class ListActivity : AppCompatActivity() {
             list.adapter = arrayAdapter
 
             list.setOnItemClickListener { _, _, position, _ ->
-                //Toast.makeText(this@ListActivity, "Has pulsado: " + recordsList[position], Toast.LENGTH_SHORT).show()
 
-
-                var audioFound = false
+                var audioFound: Boolean
                 var audioRef = recordsList[position]
 
                 val pathReference = mStorage.child("$audioRef") // Create a reference with an initial file path and name
 
-                var child = "$referenceDir/$audioRef"
+                //var child = "$referenceDir/$audioRef"
 
                 audioRef.replace(".3gp","")
                 val localFile = File.createTempFile(audioRef, "3gp")
 
 
                 try {
+                    pathReference.getFile(localFile).addOnSuccessListener {
+                        Toast.makeText(this, "Local temp file has been created: $localFile", Toast.LENGTH_SHORT).show()
+                        audioFound = true
 
-                pathReference.getFile(localFile).addOnSuccessListener {
+                        if (audioFound) {
+                            enableReproduction()
+                        } else {
+                            disableAll()
+                        }
+                    }.addOnFailureListener{ ex ->
+                        Log.e(LOG_TAG, "Error creating local file $localFile", ex)
+                    }
 
-                    Toast.makeText(
-                        this,
-                        "Local temp file has been created: $localFile",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                    audioFound = true
 
                 } catch(e: Exception){
                     Log.e(LOG_TAG, "Error creating local file $localFile", e)
                 }
 
-                if (audioFound) {
-                    playButton.isVisible = true
-                    pauseButton.isVisible = true
-                    pauseButton.isEnabled = false
-                } else {
-                    playButton.isVisible = false
-                    pauseButton.isVisible = false
-                    pauseButton.isEnabled = false
-                }
 
                 playButton.setOnClickListener {
+                    disableReproduction()
                     startPlaying(localFile)
-                    playButton.isEnabled = false
                 }
 
                 pauseButton.setOnClickListener {
                     stopPlaying()
+                    disableAll()
+                    recreate() //Trigger the onCreate method in the activity. Otherwise reproduction doesn't find the file to reproduce
                 }
 
             }
@@ -130,19 +121,16 @@ class ListActivity : AppCompatActivity() {
 
 
 
-
-
         homeButton.setOnClickListener {
             finish()
         }
 
 
-
-
     }
 
+
     private fun startPlaying(filePath: File) {
-        mediaPlayer = MediaPlayer().apply {
+        mediaPlayer.apply {
             try {
                 setDataSource(filePath.toString())
                 prepare()
@@ -151,6 +139,7 @@ class ListActivity : AppCompatActivity() {
             }
             start()
         }
+
     }
 
     private fun stopPlaying() {
@@ -158,9 +147,31 @@ class ListActivity : AppCompatActivity() {
         mediaPlayer.release()
     }
 
-    fun setOnItemClick(view: View?, position: Int) {
-        Toast.makeText(this@ListActivity, "Clicked item on position: $position", Toast.LENGTH_SHORT)
-            .show()
+
+    private fun increaseAlpha(v: View){
+        v.alpha = 1F
+    }
+    private fun decreaseAlpha(v: View){
+        v.alpha = 0.5F
     }
 
+    private fun enableReproduction(){
+        playButton.isEnabled = true
+        pauseButton.isEnabled = false
+        decreaseAlpha(pauseButton)
+        increaseAlpha(playButton)
+    }
+    private fun disableReproduction(){
+        playButton.isEnabled = false
+        pauseButton.isEnabled = true
+        decreaseAlpha(playButton)
+        increaseAlpha(pauseButton)
+    }
+    private fun disableAll() {
+        decreaseAlpha(pauseButton)
+        decreaseAlpha(playButton)
+        playButton.isEnabled = false
+        pauseButton.isEnabled = false
+    }
 }
+

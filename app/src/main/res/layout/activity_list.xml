@@ -34,6 +34,7 @@
         android:layout_width="33dp"
         android:layout_height="36dp"
         android:layout_marginStart="3dp"
+        android:alpha="0.5"
         app:layout_constraintBottom_toBottomOf="@+id/groupPlay"
         app:layout_constraintStart_toEndOf="@+id/play"
         app:layout_constraintTop_toTopOf="@+id/groupPlay"
@@ -44,6 +45,7 @@
         android:layout_width="56dp"
         android:layout_height="43dp"
         android:layout_marginStart="120dp"
+        android:alpha="0.5"
         app:layout_constraintBottom_toBottomOf="@+id/groupPlay"
         app:layout_constraintStart_toStartOf="@+id/groupPlay"
         app:layout_constraintTop_toTopOf="@+id/groupPlay"
@@ -69,7 +71,6 @@
         android:layout_marginBottom="25dp"
         android:choiceMode="singleChoice"
         android:fadeScrollbars="false"
-
         android:fastScrollAlwaysVisible="true"
         android:fastScrollEnabled="true"
         android:listSelector="@color/pink_dark"

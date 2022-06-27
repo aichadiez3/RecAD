@@ -11,6 +11,7 @@ import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -226,21 +227,7 @@ class RecordingActivity : AppCompatActivity() {
         mediaPlayer.pause()
         mediaPlayer.release()
     }
-/*
-    private fun terminateAndEraseFile(context: Context) {
-        Log.d(Constants.TAG, "RecordService terminateAndEraseFile")
-        stopRecording()
-        recording = false
-        deleteFile()
-    }
 
-    private fun deleteFile() {
-        Log.d(Constants.TAG, "RecordService deleteFile")
-        FileHelper.deleteFile(fileName)
-        fileName = null
-    }
-
- */
 
     private fun enableStart(){
         startButton.isVisible = true
@@ -259,11 +246,12 @@ class RecordingActivity : AppCompatActivity() {
 
     private fun endRecording(){
         alert.text = "Recording Finished"
-        findViewById<ImageView>(R.id.enabledIcon).isVisible = true
         findViewById<ImageView>(R.id.upload).isVisible = true
         stopButton.isVisible = false
         startButton.isVisible = false
         playButton.isVisible = true
+        startButton.isVisible = true
+        decreaseAlpha(startButton)
     }
 
     private fun isDisconnected(){
@@ -306,5 +294,9 @@ class RecordingActivity : AppCompatActivity() {
             finish()
         }, 1500)
 
+    }
+
+    private fun decreaseAlpha(v: View){
+        v.alpha = 0.5F
     }
 }

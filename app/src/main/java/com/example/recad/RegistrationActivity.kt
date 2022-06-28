@@ -123,16 +123,16 @@ class RegistrationActivity : AppCompatActivity() {
 
                     if(task.isSuccessful){      //notifies if the user has been created correctly
                         if (user != null) {
-
                             // Here we save data of the registration into DB
                             database.collection("users").document(username).set(       // we create a single document for each user (easy to access)
-                                hashMapOf("name" to name,
-                                "surname" to surname,
-                                "date of birth" to date,
-                                "gender" to gender,
-                                "language" to null,
-                                "antecedents" to null,
-                                "diagnosis" to null)
+                                hashMapOf("user reference" to user.uid,
+                                    "name" to name,
+                                    "surname" to surname,
+                                    "date of birth" to date,
+                                    "gender" to gender,
+                                    "language" to null,
+                                    "antecedents" to null,
+                                    "diagnosis" to null)
                             )
 
                             showWelcome()

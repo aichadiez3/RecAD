@@ -142,12 +142,15 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
                         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
 
                         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
-                            if(it.isSuccessful){
 
+                            if(it.isSuccessful){
+                                val user = FirebaseAuth.getInstance().currentUser!!
                                 database.collection("users").document(account.email.toString()).get().addOnSuccessListener { document ->
-                                    if(document.get("date of birth") == null){
+
+                                    if(document.get("user reference") == null){
                                         database.collection("users").document(account.email.toString()).set(
-                                            hashMapOf("name" to account.displayName,
+                                            hashMapOf("user reference" to user.uid,
+                                                "name" to account.displayName,
                                                 "surname" to "",
                                                 "date of birth" to "",
                                                 "gender" to null,

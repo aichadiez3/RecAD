@@ -130,6 +130,10 @@ class ListActivity : AppCompatActivity() {
 
 
     private fun startPlaying(filePath: File) {
+
+        list.isEnabled = false
+        decreaseAlpha(list)
+
         mediaPlayer.apply {
             try {
                 setDataSource(filePath.toString())

@@ -4,11 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+
+private const val TAG = "VoiceProfileError"
 
 class VoiceMenuActivity : AppCompatActivity() {
 
@@ -19,10 +20,19 @@ class VoiceMenuActivity : AppCompatActivity() {
     private lateinit var startButton: ImageView
 
 
+
     override fun onResume() {
         super.onResume()
-        database.collection("users").document(user.email.toString()).collection("voice profile").get().addOnSuccessListener {
 
+        increaseAlpha(startButton)
+        increaseAlpha(findViewById<ImageView>(R.id.imageView6))
+        decreaseAlpha(profileButton)
+        startButton.isEnabled = true
+        profileButton.isEnabled = false
+
+        /*
+
+        database.collection("users").document(user.email.toString()).collection("voice profile").get().addOnSuccessListener {
             increaseAlpha(startButton)
             increaseAlpha(findViewById<ImageView>(R.id.imageView6))
             startButton.isEnabled = true
@@ -30,7 +40,10 @@ class VoiceMenuActivity : AppCompatActivity() {
         }.addOnFailureListener {
             profileButton.isEnabled = true
             increaseAlpha(profileButton)
+            Log.e(TAG, "Voice profile not found for this user")
         }
+
+         */
 
     }
 
@@ -41,23 +54,33 @@ class VoiceMenuActivity : AppCompatActivity() {
         profileButton = findViewById(R.id.profileButton)
         startButton = findViewById(R.id.startButton)
 
-        startButton.isEnabled = false
-        profileButton.isEnabled = false
-
         user = FirebaseAuth.getInstance().currentUser!!
 
-    // Check if the voice profile has been created to enable options
 
+        startButton.isEnabled = false
+        profileButton.isEnabled = true
+        increaseAlpha(profileButton)
+
+        /*
+// Check if the voice profile has been created to enable options
         database.collection("users").document(user.email.toString()).collection("voice profile").get().addOnSuccessListener {
+            profileButton.isEnabled = true
+            increaseAlpha(profileButton)
+            /*
             Toast.makeText(this,"Profile is already created", Toast.LENGTH_SHORT).show()
             increaseAlpha(startButton)
             increaseAlpha(findViewById<ImageView>(R.id.imageView6))
             startButton.isEnabled = true
 
+             */
+
         }.addOnFailureListener {
             profileButton.isEnabled = true
             increaseAlpha(profileButton)
+            Log.e(TAG, "Voice profile not found for this user")
         }
+
+         */
 
         profileButton.setOnClickListener {
             startActivity(Intent(this, VoiceProfileActivity::class.java))

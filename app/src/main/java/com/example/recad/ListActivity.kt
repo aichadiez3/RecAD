@@ -93,7 +93,6 @@ class ListActivity : AppCompatActivity() {
 
             playButton.setOnClickListener {
                 disableReproduction()
-                var c = localFile.toString()
                 startPlaying(localFile)
             }
 

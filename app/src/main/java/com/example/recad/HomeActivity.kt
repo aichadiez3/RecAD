@@ -20,6 +20,18 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var logout: ImageView
     private lateinit var nameField: TextView
 
+    override fun onResume() {
+        super.onResume()
+        nameField = findViewById(R.id.nameText)
+
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            database.collection("users").document(user.email.toString()).get().addOnSuccessListener { document ->
+                nameField.text = Editable.Factory.getInstance().newEditable(document.get("name").toString())
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)

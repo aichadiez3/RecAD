@@ -80,6 +80,7 @@ class SettingsActivity : AppCompatActivity() {
         birthdayField = findViewById(R.id.dateField2)
         val group = findViewById<ChipGroup>(R.id.chipGroup)
         var antecedents = arrayListOf<String>()
+        var diagnosis: String = "null"
 
         // -------> get external data
         database.collection("users").document(user.email.toString()).get().addOnSuccessListener { document ->
@@ -134,12 +135,16 @@ class SettingsActivity : AppCompatActivity() {
                 for(id in ids){
                     val text = group.findViewById<Chip>(id).text.toString()
                     antecedents.add(text)
+                    if(antecedents.contains("MCI")) {
+                        diagnosis = "MCI"
+                    }
                 }
             } else {
                 antecedents.clear()
+                diagnosis = "NAD"
             }
 
-            val verif = saveInfo(nameField.text.toString(), surnameField.text.toString(), birthdayField.text.toString(), genderField, languageField, antecedents)
+            val verif = saveInfo(nameField.text.toString(), surnameField.text.toString(), birthdayField.text.toString(), genderField, languageField, antecedents, diagnosis)
             if (verif){
                 finish()
                 Toast.makeText(this, "Data changed successfully", Toast.LENGTH_SHORT).show()
@@ -152,7 +157,7 @@ class SettingsActivity : AppCompatActivity() {
 
     }
 
-    private fun saveInfo(name:String, surname:String, date:String, gender:String, language:String, antec:ArrayList<String>): Boolean {
+    private fun saveInfo(name:String, surname:String, date:String, gender:String, language:String, antec:ArrayList<String>, diagnosis:String): Boolean {
 
         database.collection("users").document(user.email.toString()).update("name", name)
             .addOnFailureListener {
@@ -172,6 +177,9 @@ class SettingsActivity : AppCompatActivity() {
         database.collection("users").document(user.email.toString()).update("antecedents", antec)
             .addOnFailureListener {
                 Toast.makeText(this, "Error updating antecedents", Toast.LENGTH_SHORT).show() }
+        database.collection("users").document(user.email.toString()).update("diagnosis", diagnosis)
+            .addOnFailureListener {
+                Toast.makeText(this, "Error updating diagnosis", Toast.LENGTH_SHORT).show() }
 
         val passw1 = Editable.Factory.getInstance().newEditable(findViewById<EditText>(R.id.changePassword).text)
         val passw2 = Editable.Factory.getInstance().newEditable(findViewById<EditText>(R.id.changePassword2).text)

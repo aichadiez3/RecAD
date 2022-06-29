@@ -51,7 +51,6 @@ class RecordingActivity : AppCompatActivity() {
 
     private lateinit var mediaRecorder: MediaRecorder
     private lateinit var mediaPlayer: MediaPlayer
-    private var player: MediaPlayer? = null
     lateinit var mStorage : StorageReference
 
     // Requesting permission to RECORD_AUDIO
@@ -78,6 +77,7 @@ class RecordingActivity : AppCompatActivity() {
         var type = ""
         user = FirebaseAuth.getInstance().currentUser!!
         database.collection("users").document(user.email.toString()).get().addOnSuccessListener { document ->
+
             type = document?.get("diagnosis")?.toString().toString()
 
         }
@@ -89,8 +89,7 @@ class RecordingActivity : AppCompatActivity() {
             enableStart()
         } catch(e: Exception){
             alert.text = "Permissions denied"
-            Toast.makeText(this, "permissions failed" , Toast.LENGTH_SHORT).show()
-            //Log.e(LOG_TAG, "permissions failed")
+            Log.e(LOG_TAG, "permissions failed exception: ", e)
             finish()
         }
 
@@ -176,7 +175,7 @@ class RecordingActivity : AppCompatActivity() {
         if (!permissionToRecordAccepted) finish()
     }
 
-
+    @Suppress("DEPRECATION")
     private fun startRecording(filePath:String){
         mediaRecorder = MediaRecorder().apply {
             try {
@@ -228,6 +227,7 @@ class RecordingActivity : AppCompatActivity() {
         mediaPlayer.release()
     }
 
+    /** BUTTON VISUALISATION FUNCTIONS */
 
     private fun enableStart(){
         startButton.isVisible = true

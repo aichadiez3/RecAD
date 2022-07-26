@@ -9,9 +9,10 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- adding local storage permission -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
+        tools:ignore="ScopedStorage"/>
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -92,6 +93,7 @@
                 <action android:name="com.example.recad.VoiceProfileActivity" />
                 <category android:name="android.intent.category.VOICE" />
             </intent-filter>
+
         </activity>
 
         <activity

@@ -24,7 +24,7 @@ import java.io.File
 import java.io.IOException
 
 private const val TAG = "ProfileRecordTest"
-private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
+private const val REQUEST_RECORD_AUDIO_PERMISSION = 201
 
 class VoiceProfileActivity : AppCompatActivity() {
 
@@ -37,7 +37,7 @@ class VoiceProfileActivity : AppCompatActivity() {
     private lateinit var alert: TextView
     private lateinit var alert2: TextView
 
-    private var mediaRecorder: MediaRecorder ? = null
+    private lateinit var mediaRecorder: MediaRecorder
     lateinit var mStorage : StorageReference
 
     // Requesting permission to RECORD_AUDIO
@@ -75,6 +75,7 @@ class VoiceProfileActivity : AppCompatActivity() {
 
 
         startButton.setOnClickListener {
+
             alert2.isVisible = true
             alert2.text = "Record: $count/3"
             if(count>1){
@@ -82,20 +83,21 @@ class VoiceProfileActivity : AppCompatActivity() {
             }
 
             filePath = Environment.getExternalStorageDirectory().absolutePath
-            filePath += "/${user.uid}"+ "_" + "$count"
+            filePath += "/${user.uid}_$count.3gp"
             startRecording(filePath)
         }
 
         stopButton.setOnClickListener {
+            Toast.makeText(this, "Stop pressed. Waiting to upload...", Toast.LENGTH_LONG).show()
             stopRecording()
             findViewById<ImageView>(R.id.done).isVisible = false
+            findViewById<ImageView>(R.id.sync).isVisible = true
             uploadAudio("${user.uid}" + "_" + "$count")
             createVoiceProfileDoc(count)
 
             if(count == 3) {
                 waitBeforeClose()
             } else {
-                enableStart()
                 count++
             }
 
@@ -134,6 +136,7 @@ class VoiceProfileActivity : AppCompatActivity() {
             alert.text = "Profile Uploaded"
             findViewById<ImageView>(R.id.sync).isVisible = false
             findViewById<ImageView>(R.id.done).isVisible = true
+            enableStart()
         }
     }
 
@@ -142,10 +145,19 @@ class VoiceProfileActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.done).isVisible = true
         alert.text = "Voice Profile Creation Completed"
 
-        val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed(Runnable {
-            finish()
-        }, 1500)
+        database.collection("users").document(user.email.toString()).update("voice profile verify", true).addOnSuccessListener {
+
+            val handler = Handler(Looper.getMainLooper())
+            handler.postDelayed(Runnable {
+                finish()
+            }, 1500)
+
+        }.addOnFailureListener {
+                Toast.makeText(this, "Error updating verification", Toast.LENGTH_SHORT).show()
+        }
+
+
+
 
     }
 
@@ -170,6 +182,7 @@ class VoiceProfileActivity : AppCompatActivity() {
                 setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
                 prepare()
                 isRecording = true
+
             } catch (e: IOException) {
                 Log.e(TAG, "start recording prepare() failed")
                 isRecording = false
@@ -184,13 +197,11 @@ class VoiceProfileActivity : AppCompatActivity() {
     private fun stopRecording() {
         alert.text = "Recording Finished"
         if(isRecording){
-            mediaRecorder?.stop()
-            mediaRecorder?.release()
-            mediaRecorder = null
+            mediaRecorder.stop()
+            mediaRecorder.release()
             isRecording = false
         } else {
-            mediaRecorder?.release()
-            mediaRecorder = null
+            mediaRecorder.release()
         }
 
 

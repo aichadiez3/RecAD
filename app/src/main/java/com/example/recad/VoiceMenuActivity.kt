@@ -2,8 +2,10 @@ package com.example.recad
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -56,31 +58,33 @@ class VoiceMenuActivity : AppCompatActivity() {
 
         user = FirebaseAuth.getInstance().currentUser!!
 
+                // Check if the voice profile has been created to enable options
 
-        startButton.isEnabled = false
-        profileButton.isEnabled = true
-        increaseAlpha(profileButton)
+        database.collection("users").document(user.email.toString()).get().addOnSuccessListener { doc ->
 
-        /*
-// Check if the voice profile has been created to enable options
-        database.collection("users").document(user.email.toString()).collection("voice profile").get().addOnSuccessListener {
-            profileButton.isEnabled = true
-            increaseAlpha(profileButton)
-            /*
-            Toast.makeText(this,"Profile is already created", Toast.LENGTH_SHORT).show()
-            increaseAlpha(startButton)
-            increaseAlpha(findViewById<ImageView>(R.id.imageView6))
-            startButton.isEnabled = true
+            if(doc != null){
+                //Log.d(TAG, "Document found")
 
-             */
+                var verify = doc.get("voice profile verify")
+                if(verify == null) {
+                    unableStart()
+                } else {
+                    Toast.makeText(this,"Profile is already created", Toast.LENGTH_SHORT).show()
+                    enableStart()
+                }
+
+            } else {
+                Log.e(TAG, "Error finding document")
+            }
+
 
         }.addOnFailureListener {
-            profileButton.isEnabled = true
-            increaseAlpha(profileButton)
-            Log.e(TAG, "Voice profile not found for this user")
+            Log.e(TAG, "Document not found for this user")
+            Toast.makeText(this,"Document not found for this user", Toast.LENGTH_SHORT).show()
+            finish()
         }
 
-         */
+
 
         profileButton.setOnClickListener {
             startActivity(Intent(this, VoiceProfileActivity::class.java))
@@ -93,11 +97,6 @@ class VoiceMenuActivity : AppCompatActivity() {
 
 
 
-
-
-
-
-
     }
 
     private fun decreaseAlpha(v: View){
@@ -107,4 +106,20 @@ class VoiceMenuActivity : AppCompatActivity() {
         v.alpha = 1F
     }
 
+
+    private fun unableStart(){
+        profileButton.isEnabled = true
+        startButton.isEnabled = false
+        increaseAlpha(profileButton)
+        decreaseAlpha(startButton)
+        decreaseAlpha(findViewById<ImageView>(R.id.imageView6))
+    }
+
+    private fun enableStart(){
+        decreaseAlpha(profileButton)
+        profileButton.isEnabled = false
+        increaseAlpha(startButton)
+        increaseAlpha(findViewById<ImageView>(R.id.imageView6))
+        startButton.isEnabled = true
+    }
 }

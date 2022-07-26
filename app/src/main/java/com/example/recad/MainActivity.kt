@@ -156,7 +156,8 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
                                                 "gender" to null,
                                                 "language" to null,
                                                 "antecedents" to null,
-                                                "diagnosis" to null)
+                                                "diagnosis" to null,
+                                                "voice profile verify" to null)
                                         )
                                     }
 

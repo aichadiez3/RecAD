@@ -132,7 +132,8 @@ class RegistrationActivity : AppCompatActivity() {
                                     "gender" to gender,
                                     "language" to null,
                                     "antecedents" to null,
-                                    "diagnosis" to null)
+                                    "diagnosis" to null,
+                                    "voice profile verify" to null)
                             )
 
                             showWelcome()

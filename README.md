@@ -17,6 +17,15 @@ The minimum _hardware_ requirements would be as follows:
 - Working device speaker
 - Microphone
 
+## PROGRAM PERMISSIONS
+
+The first execution of the program asks for allowing permission for accessing the microphone and internal storage.
+
+A problem may occur when the permission to local storage stays blocked. Solve this problem by:
+
+- Go to App info
+- Permissions
+- *Storage* permission may be set as _NOT ALLOWED_. Set it then as _ALLOWED_ + _Allow management of all files_
 
 ## ABOUT RECAD
 VERSION 1.0, 2022
